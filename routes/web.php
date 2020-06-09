@@ -11,12 +11,7 @@ Route::get('/about', function () {
     return view('about');
 });
 
-Route::get('/albums', function () {
-    $artists = DB::table('artists')->get();
-    $albums = Album::with('artists')->get();
-    $countries = Countries::getList();
-    return view('albums', compact('albums','artists','countries'));
-});
+Route::get('/albums', 'AlbumsController@index');
 
 
 Auth::routes();
