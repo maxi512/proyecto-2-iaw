@@ -6,7 +6,8 @@ use App\Album;
 use Faker\Generator as Faker;
 
 $factory->define(Album::class, function (Faker $faker) {
+    $faker->addProvider(new \RauweBieten\PhpFakerMusic\Metal($faker));
     return [
-       'name' => $faker->name
+       'name' => $faker->musicMetalAlbum()
     ];
 });

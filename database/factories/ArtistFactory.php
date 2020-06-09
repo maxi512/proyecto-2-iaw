@@ -7,8 +7,9 @@ use Faker\Generator as Faker;
 
 
 $factory->define(Artist::class, function (Faker $faker) {
+    $faker->addProvider(new \RauweBieten\PhpFakerMusic\Metal($faker));
     return [
-        'name' => $faker->name,
+        'name' => $faker->musicMetalArtist(),
         'country' => $faker->country
     ];
 });

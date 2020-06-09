@@ -13,7 +13,7 @@
     <div class="container">
         @foreach ($song->artists as $artist)
             <li>{{ $artist->name }}</li>
-            <li>{{ $song->album->name}} </li>
+            <li>{{ $song->album->name }} </li>
         @endforeach
     </div>
   </body>
