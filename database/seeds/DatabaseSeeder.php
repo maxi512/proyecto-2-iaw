@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Artist;
+use App\Album;
+use App\Song;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UserSeeder::class);
+        factory(Album::class,10)->create()->each(function ($album){
+            $album->songs()->saveMany(factory(Song::class,3)->create());
+        });
     }
 }
