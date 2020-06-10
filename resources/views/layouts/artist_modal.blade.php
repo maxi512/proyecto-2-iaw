@@ -8,22 +8,22 @@
                 </button>
             </div>
             <div class="modal-body">
-                @if(count($errors) > 0)
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{$error}}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-                @if(Session::has('success'))
-                    <div class="alert alert-success">
-                        <p>
-                            Data added!
-                        </p>
-                    </div>
-                @endif
+                <div id="modalAlert">
+                    @if(count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    @if(Session::has('success'))
+                        <div class="alert alert-success">
+                            <p>Data added!</p>
+                        </div>
+                    @endif
+                </div>
                 <form id="formArtist" action="submit" method="POST">
                     {{ csrf_field() }}
                     <div class="form-group">
@@ -44,10 +44,14 @@
         </div>
     </div>
 </div>
+
 @if(!empty(Session::get('errors')) > 0 || Session::get('success'))
     <script>
         $(function() {
             $('#myModal').modal('show');
+        });
+        $('#myModal').on('hidden.bs.modal', function () {
+            $('#modalAlert').addClass('d-none');
         });
     </script>
 @endif
