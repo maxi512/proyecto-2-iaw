@@ -8,6 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(Album::class, function (Faker $faker) {
     $faker->addProvider(new \RauweBieten\PhpFakerMusic\Metal($faker));
     return [
-       'name' => $faker->musicMetalAlbum()
+       'name' => $faker->musicMetalAlbum(),
+       'image_src' => $faker->image('public/storage/images',300,300, null, false)
     ];
 });

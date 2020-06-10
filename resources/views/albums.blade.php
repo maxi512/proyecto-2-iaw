@@ -31,18 +31,32 @@
 					<th scope="row">{{ $album->id }}</th>
 					<td>{{ $album->name }}</td>
 					<td>
-						<a>
-							@foreach($album->artists as $artist)
-								@if($loop->last)
-									{{ $artist->name }}.
-								@else
-									{{ $artist->name }},
-								@endif
-							@endforeach
-						<a/>
+						<div class="row">
+							<div class="col">
+								<a>
+									@foreach($album->artists as $artist)
+										@if($loop->last)
+											{{ $artist->name }}.
+										@else
+											{{ $artist->name }},
+										@endif
+									@endforeach
+								<a/>
+							</div>
+							<div class="col">
+								<button type="button" class="btn btn-primary btn-sm showCover" data-toggle="modal" data-target="#modalCover" data-albumcover="/storage/images/{{$album->image_src}}">
+									Show Cover
+								</button>
+							</div>
+						</div>
 					</td>
 				</tr>
 			@endforeach
+			@include('layouts.album_cover_modal')
+			<script>
+					$('.showCover').on('click', function() {
+					$('#modal-body').html('<img src="' + $(this).data('albumcover') + '"/>')});
+			</script>
 		</tbody>
 	</table>
 	<script>
