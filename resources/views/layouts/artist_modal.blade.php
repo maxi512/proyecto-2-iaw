@@ -24,7 +24,7 @@
                         </div>
                     @endif
                 </div>
-                <form id="formArtist" action="submit" method="POST">
+                <form id="formArtist" action="/artists/submit" method="POST">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Name:</label>

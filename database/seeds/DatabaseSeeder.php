@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(Album::class,10)->create()->each(function ($album){
+        factory(Album::class,100)->create()->each(function ($album){
             $album->artists()->saveMany(factory(Artist::class,4)->create());
         });
     }

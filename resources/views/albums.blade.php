@@ -1,11 +1,28 @@
 @extends('layouts.master')
 @section('content')
-	<table class="table">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+	<table class="table table-striped table-bordered" id="example" style="width:100%">
 		<thead>
 			<tr>
-				<th scope="col">#</th>
-				<th scope="col">Name</th>
-				<th scope="col">Artists</th>
+				<th scope="col">
+					<div class="d-flex">
+						<div>Id</div>
+						<div class="ml-auto"><i class="fas fa-sort" aria-hidden="true"></i></div>
+					</div>
+				</th>
+				<th scope="col">
+					<div class="d-flex">
+						<div>Name</div>
+						<div class="ml-auto"><i class="fas fa-sort" aria-hidden="true"></i></div>
+					</div>
+				</th>
+				
+				<th scope="col">
+					<div class="d-flex">
+						<div>Artists</div>
+						<div class="ml-auto"><i class="fas fa-sort" aria-hidden="true"></i></div>
+					</div>
+				</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -14,16 +31,21 @@
 					<th scope="row">{{ $album->id }}</th>
 					<td>{{ $album->name }}</td>
 					<td>
-						<select name="categories" id="categories" class="form-control">
+						<a>
 							@foreach($album->artists as $artist)
-								<option value="{{ $artist->id }}">{{ $artist->name }}</option>
+								@if($loop->last)
+									{{ $artist->name }}.
+								@else
+									{{ $artist->name }},
+								@endif
 							@endforeach
-						</select>
+						<a/>
 					</td>
 				</tr>
 			@endforeach
 		</tbody>
 	</table>
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Artist </button>
-	@include('layouts.artist_modal')
+	<script>
+		$(document).ready(function() {$('#example').DataTable({"pageLength": 10,"dom": '<"d-flex justify-content-end"f>t<"d-flex justify-content-center"p><"clear">'});});
+	</script>
 @endsection

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Artist as Artist;
 Use Redirect;
+use Countries;
+use DB;
 
 class ArtistsController extends Controller
 {
@@ -15,7 +17,9 @@ class ArtistsController extends Controller
      */
     public function index()
     {
-        //
+        $countries = Countries::getList();
+        $artists = DB::table('artists')->get();
+        return view('artists',compact('artists','countries'));
     }
 
     /**

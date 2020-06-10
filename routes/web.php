@@ -11,9 +11,10 @@ Route::get('/about', function () {
     return view('about');
 });
 
-Route::post('submit', 'ArtistsController@store');
+Route::post('/artists/submit', 'ArtistsController@store');
 
 Route::get('/albums', 'AlbumsController@index');
+Route::get('/artists', 'ArtistsController@index');
 
 
 Auth::routes();
