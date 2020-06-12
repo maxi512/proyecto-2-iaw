@@ -23,7 +23,7 @@
 						<div class="ml-auto"><i class="fas fa-sort" aria-hidden="true"></i></div>
 					</div>
 				</th>
-			</tr>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -32,14 +32,18 @@
 					<th scope="row">{{ $artist->id }}</th>
 					<td>{{ $artist->name }}</td>
 					<td>{{$artist->country}}</td>
+					<td> <button type="button" class="btn btn-primary btn-sm edit" data-toggle="modal" data-target="#editModal" data-country="{{$artist->country}}" data-name="{{$artist->name}}" data-id="{{$artist->id}}">Edit</button></td>
 				</tr>
 			@endforeach
 		</tbody>
 	</table>
 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Artist </button>
-
+	@include('layouts.edit_artist_modal')
 	@include('layouts.artist_modal')
 	<script>
-		$(document).ready(function() {$('#example1').DataTable({"pageLength": 10,"dom": '<"d-flex justify-content-end"f>t<"d-flex justify-content-center"p><"clear">'});});
+		$(document).ready(function() {
+			$('#example1').DataTable({"pageLength": 10,
+			"dom": '<"d-flex row justify-content-center"<"col"><"col-4 d-flex justify-content-center align-self-end"text-center"p><"col p-2 mr-2"<"float-right"f>>>t<"clear">',
+		});});
 	</script>
 @endsection

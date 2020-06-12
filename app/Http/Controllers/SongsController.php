@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Artist as Artist;
-Use Redirect;
-use Countries;
 use DB;
-
-class ArtistsController extends Controller
+use App\Song as Song;
+class SongsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +14,8 @@ class ArtistsController extends Controller
      */
     public function index()
     {
-        $countries = Countries::getList();
-        $artists = DB::table('artists')->get();
-        return view('artists',compact('artists','countries'));
+        $songs = Song::with('artists')->get();
+        return view('songs',compact('songs'));
     }
 
     /**
@@ -40,15 +36,7 @@ class ArtistsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'name' => 'required',
-            'country' => 'required'
-        ]);
-        $artist = new Artist;
-        $artist->name = $request->name;
-        $artist->country = $request->country;
-        $artist->save();
-        return Redirect::back()->with('success', '!');
+        //
     }
 
     /**
@@ -80,19 +68,9 @@ class ArtistsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $req)
+    public function update(Request $request, $id)
     {
-        $artist = Artist::find($req->id);
-        $this->validate($req, [
-        'country' => 'required|not_in:'.$artist->country,
-        'name' => 'required|not_in:'.$artist->name,
-
-        ]);
-       
-        $artist->name = $req->name;
-        $artist->country = $req->country;
-        $artist->save();
-        return Redirect::back()->with('status', 'Artist Updated!');
+        //
     }
 
     /**
