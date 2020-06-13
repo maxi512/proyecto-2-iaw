@@ -65,8 +65,7 @@
     </table>
     <script>
 		$(document).ready(function() {$('#example').DataTable({"pageLength": 10,
-		"dom": '<"d-flex row justify-content-center"<"col"><"col-4 d-flex justify-content-center align-self-end"text-center"p><"col p-2 mr-2"<"float-right"f>>>t<"clear">',
-
+		"dom": '<"d-flex row justify-content-center"<"col"><"col-4 d-flex justify-content-center align-self-end"text-center"p><"col p-2 mr-2"<"float-right"f>>>t<"clear">'
 		});});
 	</script>
 @endsection

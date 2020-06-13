@@ -45,7 +45,7 @@
     </div>
 </div>
 
-@if(!empty(Session::get('errors')) > 0 || Session::get('success'))
+@if((!empty(Session::get('errors')) > 0 && !($errors->first() == 'No changes detected.'))|| Session::get('success'))
     <script>
         $(function() {
             $('#myModal').modal('show');

@@ -14,6 +14,13 @@
                             <p>{{ session('status') }}</p>
                         </div>
                     @endif
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                <li>{{$errors->first()}}</li>
+                            </ul>
+                        </div>
+                    @endif
                 </div>
                 <form id="formEditArtist" action="/artists/update" method="POST">
                     {{ csrf_field() }}
@@ -32,7 +39,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="formEditArtist">Add</button>
+                <button type="submit" id="editButton" class="btn btn-primary" form="formEditArtist">Edit</button>
             </div>
         </div>
     </div>
@@ -43,15 +50,17 @@
     $('#inputName').val($(this).data('name'))
     $('#artistHide').val($(this).data('id'))});
 </script>
-@if(session('status'))
+@if(session('status') || $errors->first() == 'No changes detected.')
      <script>
         $(function() {
             $('#editModal').modal('show');
             $('#formEditArtist').addClass('d-none');
+            $('#editButton').addClass('d-none');
         });
         $('#editModal').on('hidden.bs.modal', function () {
             $('#modalAlertEditArtist').addClass('d-none');
             $('#formEditArtist').removeClass('d-none');
+            $('#editButton').removeClass('d-none');
         });
     </script>
 @endif

@@ -83,16 +83,16 @@ class ArtistsController extends Controller
     public function update(Request $req)
     {
         $artist = Artist::find($req->id);
-        $this->validate($req, [
-        'country' => 'required|not_in:'.$artist->country,
-        'name' => 'required|not_in:'.$artist->name,
-
-        ]);
-       
         $artist->name = $req->name;
         $artist->country = $req->country;
-        $artist->save();
-        return Redirect::back()->with('status', 'Artist Updated!');
+        if ($artist->isDirty()) {
+            $artist->save();
+            return Redirect::back()->with('status', 'Artist Updated!');
+        }
+        else{
+             return Redirect::back()->withErrors(['No changes detected.']);
+        }
+        
     }
 
     /**
