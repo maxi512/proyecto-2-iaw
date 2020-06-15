@@ -102,7 +102,9 @@ class ArtistsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    {    
+        $artist = Artist::find($id);
+        $artist->delete();
+        return Redirect::back();
     }
 }

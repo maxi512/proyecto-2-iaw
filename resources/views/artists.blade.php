@@ -32,13 +32,17 @@
 					<th scope="row">{{ $artist->id }}</th>
 					<td>{{ $artist->name }}</td>
 					<td>{{$artist->country}}</td>
-					<td> <button type="button" class="btn btn-primary btn-sm edit" data-toggle="modal" data-target="#editModal" data-country="{{$artist->country}}" data-name="{{$artist->name}}" data-id="{{$artist->id}}">Edit</button></td>
+					<td> 
+						<button type="button" class="btn btn-primary btn-sm edit" data-toggle="modal" data-target="#editModal" data-country="{{$artist->country}}" data-name="{{$artist->name}}" data-id="{{$artist->id}}">Edit</button>
+						<button type="button" class="btn btn-danger btn-sm edit" data-toggle="modal" data-target="#deleteModal" data-name="{{$artist->name}}" data-id="{{$artist->id}}">Delete</button>
+					</td>
 				</tr>
 			@endforeach
 		</tbody>
 	</table>
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Artist </button>
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Artist</button>
 	@include('layouts.edit_artist_modal')
+	@include('layouts.artist_delete_modal')
 	@include('layouts.artist_modal')
 	<script>
 		$(document).ready(function() {

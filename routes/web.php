@@ -10,16 +10,14 @@ Route::get('/', function () {
 Route::get('/about', function () {
     return view('about');
 });
-
-Route::get('/songs','SongsController@index');
-
-Route::post('/artists/submit', 'ArtistsController@store');
-Route::post('/artists/update', 'ArtistsController@update');
+Auth::routes();
 
 Route::get('/albums', 'AlbumsController@index');
+Route::get('/songs','SongsController@index');
+
 Route::get('/artists', 'ArtistsController@index');
-
-
-Auth::routes();
+Route::post('/artists/submit', 'ArtistsController@store');
+Route::post('/artists/update', 'ArtistsController@update');
+Route::post('/artists/delete/{id}', 'ArtistsController@destroy')->name('artist.delete');
 
 Route::get('/home', 'HomeController@index')->name('home');

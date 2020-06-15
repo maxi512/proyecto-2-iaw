@@ -1,7 +1,7 @@
-@extends('layouts.master')
+@extends('layouts.app')
 @section('content')
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
-<table class="table table-striped table-bordered" id="example" style="width:100%">
+	<table class="table table-striped table-bordered" id="example" style="width:100%">
 		<thead>
 			<tr>
 				<th scope="col">
