@@ -28,6 +28,16 @@ class Artist extends Model
             $artist->albums()->detach();
 
             $allSongs = Song::all();
+            $allAlbums = Album::All();
+
+            foreach ($allAlbums as $album) {
+                if($album->artists->count() == 0){
+                    foreach($album->songs as $song){
+                        $song->delete();
+                   }
+                   $album->delete();
+                }
+            }
 
             foreach ($allSongs as  $song) {
                 if($song->artists->count() == 0){
@@ -35,6 +45,7 @@ class Artist extends Model
                 }
             }
 
+            
         });
     }
 }

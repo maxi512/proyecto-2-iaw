@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
-	<table class="table table-striped table-bordered" id="example" style="width:100%">
+	<table class="table table-striped table-bordered" id="tableAlbums" style="width:100%">
 		<thead>
 			<tr>
 				<th scope="col">
@@ -66,7 +66,8 @@
 		</tbody>
 	</table>
 	<script>
-		$(document).ready(function() {$('#example').DataTable({"pageLength": 10,
+		$(document).ready(function() {$('#tableAlbums').DataTable({
+			"pageLength": 10,
 			"dom": '<"d-flex row justify-content-center"<"col"><"col-4 d-flex justify-content-center align-self-end"text-center"p><"col p-2 mr-2"<"float-right"f>>>t<"clear">',
 		});});
 	</script>

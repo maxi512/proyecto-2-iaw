@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Artist as Artist;
-Use Redirect;
-use Countries;
+use App\User;
 use DB;
+use Redirect;
 
-class ArtistsController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +16,10 @@ class ArtistsController extends Controller
      */
     public function index()
     {
-        $countries = Countries::getList();
-        $artists = DB::table('artists')->get();
-        return view('artists',compact('artists','countries'));
+        $users = User::with('roles')->get();
+        $roles = DB::table('roles')->get();
+
+        return view('users',compact('users','roles'));
     }
 
     /**
@@ -40,15 +40,7 @@ class ArtistsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'name' => 'required',
-            'country' => 'required'
-        ]);
-        $artist = new Artist;
-        $artist->name = $request->name;
-        $artist->country = $request->country;
-        $artist->save();
-        return Redirect::back()->with('success', '!');
+        //
     }
 
     /**
@@ -81,13 +73,20 @@ class ArtistsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $req)
-    {
-        $artist = Artist::find($req->id);
-        $artist->name = $req->name;
-        $artist->country = $req->country;
-        if ($artist->isDirty()) {
-            $artist->save();
-            return Redirect::back()->with('status', 'Artist Updated!');
+    {   
+    
+        $user = User::find($req->id);
+
+        $role = DB::table('roles')->where('id', $req->role)->get()->first();
+        $actualRole = DB::table('roles')->where('id', $user->roles->first()->id)->get()->first();
+
+        $user->name = $req->name;
+        if ($user->isDirty() | $role->id != $actualRole->id) {
+
+            $user->syncRoles([$role->name]);
+            $user->save();
+            
+            return Redirect::back()->with('status', 'User Updated!');
         }
         else{
              return Redirect::back()->withErrors(['No changes detected.']);
@@ -102,14 +101,7 @@ class ArtistsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {    
-        $artist = Artist::find($id);
-        $artist->delete();
-        return Redirect::back()->with('status', 'Artist Deleted!');
-    }
-
-    public function getAlbums($id){
-        $artist = Artist::find($id);
-        return $artist->albums;
+    {
+        //
     }
 }

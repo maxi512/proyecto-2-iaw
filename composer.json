@@ -16,7 +16,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "monarobase/country-list": "^3.1",
-        "rauwebieten/php-faker-music": "^1.0"
+        "rauwebieten/php-faker-music": "^1.0",
+        "spatie/laravel-permission": "^3.13"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

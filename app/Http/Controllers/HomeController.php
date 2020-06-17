@@ -22,7 +22,11 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
+    {   
+        if(auth()->user()->roles()->count() == 0){
+            auth()->user()->assignRole('fan');
+        }
+        
         return view('home');
     }
 }

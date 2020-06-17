@@ -14,10 +14,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call([
+        RolesAndPermissionsSeeder::class,
+        ]);
+
+
         factory(Album::class,5)->create()->each(function ($album){
             $album->songs()->saveMany(factory(Song::class,2)->create()->each(function ($song){
                 $song->artists()->save(factory(Artist::class)->create());
-            }));
+        }));
+
+
+
+            $album->artists()->save(factory(Artist::class)->create());
         });
+
     }
 }

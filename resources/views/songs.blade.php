@@ -29,6 +29,7 @@
 						<div class="ml-auto"><i class="fas fa-sort" aria-hidden="true"></i></div>
 					</div>
 				</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -53,16 +54,35 @@
                     </td>
                     <td>
                         {{$song->album->name}}
-                    </td>
+					</td>
+					<td>
+						@can('update songs')
+							<button type="button" class="btn btn-primary btn-sm edit" 
+								data-toggle="modal" data-target="#editSongModal" 
+								data-album="{{$song->album->id}}"
+								data-link="{{$song->youtube_link}}"
+								data-duration="{{$song->duration}}"
+								data-artist="{{$song->artists()->first()->id}}"  
+								data-name="{{$song->name}}" data-id="{{$song->id}}">Edit
+							</button>	
+						@endcan
+
+						@can('delete songs')
+							<button type="button" class="btn btn-danger btn-sm delete"
+									data-toggle="modal" 
+									data-name="{{$song->name}}" data-id="{{$song->id}}" 
+									data-target="#deleteSongModal">Delete
+							</button>
+						@endcan
+					</td>
 				</tr>
 			@endforeach
-			@include('layouts.album_cover_modal')
-			<script>
-					$('.showCover').on('click', function() {
-					$('#modal-body').html('<img src="' + $(this).data('albumcover') + '"/>')});
-			</script>
 		</tbody>
-    </table>
+	</table>
+	<button type="button" class="btn btn-primary"data-toggle="modal" data-target="#modalSong">Add Song</button>
+	@include('layouts.song_add_modal')
+	@include('layouts.song_edit_modal')
+	@include('layouts.song_delete_modal')
     <script>
 		$(document).ready(function() {$('#example').DataTable({"pageLength": 10,
 		"dom": '<"d-flex row justify-content-center"<"col"><"col-4 d-flex justify-content-center align-self-end"text-center"p><"col p-2 mr-2"<"float-right"f>>>t<"clear">'

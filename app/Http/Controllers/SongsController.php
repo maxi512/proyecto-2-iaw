@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+Use Redirect;
 use DB;
-use App\Song as Song;
+use App\Song;
+use App\Artist;
+use App\Album;
 class SongsController extends Controller
 {
     /**
@@ -15,7 +18,9 @@ class SongsController extends Controller
     public function index()
     {
         $songs = Song::with('artists')->get();
-        return view('songs',compact('songs'));
+        $artists = Artist::all();
+        $albums = Album::all();
+        return view('songs',compact('songs','artists','albums'));
     }
 
     /**
@@ -35,8 +40,24 @@ class SongsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {   
+        $this->validate($request,[
+            'name' => 'required',
+            'artist' => 'required',
+            'album' => 'required',
+            'youtube_link' => 'required'
+        ]);
+    
+        $song = new Song;
+        $artist = Artist::find($request->artist);
+        $album = Album::find($request->album);
+        $song->name = $request->name;
+        $song->album()->associate($album);
+        $song->duration = $request->duration;
+        $song->youtube_link = $request->youtube_link;
+        $song->save();
+        $song->artists()->attach($artist);
+        return Redirect::back()->with('success', '!');
     }
 
     /**
@@ -68,9 +89,27 @@ class SongsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $song = Song::find($request->id);
+        $artist = Artist::find($request->artist);
+        $album = Album::find($request->album);
+
+        $song->name = $request->name;
+        $song->album()->associate($album);
+        $song->duration = $request->duration;
+        $song->youtube_link = $request->youtube_link;
+        $song->artists()->detach();
+        $song->artists()->attach($artist);
+
+        if ($song->isDirty()) {
+            $song->save();
+            return Redirect::back()->with('status', 'Song Updated!');
+        }
+        else{
+             return Redirect::back()->withErrors(['No changes detected.']);
+        }
+        
     }
 
     /**
@@ -81,6 +120,9 @@ class SongsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $song = Song::find($id);
+        $song->delete();
+        return Redirect::back()->with('status', 'Artist Deleted!');
+
     }
 }
