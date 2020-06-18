@@ -58,7 +58,7 @@
 					</td>
 				</tr>
 			@endforeach
-			@include('layouts.album_cover_modal')
+			@include('layouts.modals.albums.cover')
 			<script>
 					$('.showCover').on('click', function() {
 					$('#modal-body').html('<img src="' + $(this).data('albumcover') + '"/>')});

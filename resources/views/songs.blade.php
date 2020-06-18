@@ -80,9 +80,10 @@
 		</tbody>
 	</table>
 	<button type="button" class="btn btn-primary"data-toggle="modal" data-target="#modalSong">Add Song</button>
-	@include('layouts.song_add_modal')
-	@include('layouts.song_edit_modal')
-	@include('layouts.song_delete_modal')
+	@include('layouts.modals.songs.add')
+	@include('layouts.modals.songs.edit')
+	@include('layouts.modals.songs.delete')
+	
     <script>
 		$(document).ready(function() {$('#example').DataTable({"pageLength": 10,
 		"dom": '<"d-flex row justify-content-center"<"col"><"col-4 d-flex justify-content-center align-self-end"text-center"p><"col p-2 mr-2"<"float-right"f>>>t<"clear">'

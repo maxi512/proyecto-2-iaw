@@ -56,10 +56,10 @@
 		data-toggle="modal" data-target="#myModal">Add Artist</button>
 	@endcan
 
-	@include('layouts.edit_artist_modal')
-	@include('layouts.artist_delete_modal')
-	@include('layouts.artist_modal')
-	
+	@include('layouts.modals.artists.add')
+	@include('layouts.modals.artists.edit')
+	@include('layouts.modals.artists.delete')
+
 	<script>
 		$(document).ready(function() {
 			$('#example1').DataTable({"pageLength": 10,

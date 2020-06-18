@@ -52,7 +52,7 @@
 			@endforeach
 		</tbody>
 	</table>
-	@include('layouts.user_edit_modal')
+	@include('layouts.modals.users.edit')
 	<script>
 		$(document).ready(function() {
 			$('#usersTable').DataTable({"pageLength": 10,
