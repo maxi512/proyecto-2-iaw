@@ -18,7 +18,7 @@ class CreateAlbumsTable extends Migration
             $table->text("name");
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
-            $table->string('image_src');
+            $table->text("image")->nullable();
         });
     }
 

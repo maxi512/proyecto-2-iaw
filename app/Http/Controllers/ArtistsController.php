@@ -85,6 +85,7 @@ class ArtistsController extends Controller
         $artist = Artist::find($req->id);
         $artist->name = $req->name;
         $artist->country = $req->country;
+        
         if ($artist->isDirty()) {
             $artist->save();
             return Redirect::back()->with('status', 'Artist Updated!');
@@ -111,5 +112,9 @@ class ArtistsController extends Controller
     public function getAlbums($id){
         $artist = Artist::find($id);
         return $artist->albums;
+    }
+
+    public function getArtists(){
+        return Artist::all();
     }
 }

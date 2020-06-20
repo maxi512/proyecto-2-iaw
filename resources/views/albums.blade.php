@@ -52,19 +52,18 @@
 					<td>
 						<button type="button" class="btn btn-primary btn-sm showCover" 
 								data-toggle="modal" data-target="#modalCover" 
-								data-albumcover="/storage/images/{{$album->image_src}}">
+								data-id="{{strval($album->image)}}">
 							Cover
 						</button>
 					</td>
 				</tr>
 			@endforeach
 			@include('layouts.modals.albums.cover')
-			<script>
-					$('.showCover').on('click', function() {
-					$('#modal-body').html('<img src="' + $(this).data('albumcover') + '"/>')});
-			</script>
 		</tbody>
 	</table>
+	@include('layouts.modals.albums.add')
+	<button type="button" class="btn btn-primary" 
+		data-toggle="modal" data-target="#modalAddAlbum">Add Album</button>
 	<script>
 		$(document).ready(function() {$('#tableAlbums').DataTable({
 			"pageLength": 10,

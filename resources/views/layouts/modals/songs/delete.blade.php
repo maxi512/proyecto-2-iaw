@@ -40,7 +40,6 @@
 <script>
     $('.delete').on('click', function() {
     $('#songHideDelete').val($(this).data('id'))
-    console.log($(this).data('name'));
     
     $('#songName').html($(this).data('name'))
     $('#formDeleteSong').attr('action','/songs/delete/'.concat($(this).data('id')))

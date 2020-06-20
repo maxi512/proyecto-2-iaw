@@ -12,13 +12,29 @@ Route::get('/about', function () {
 });
 Auth::routes();
 
+Route::get('albums/{id}/cover', function ($id) {
+    
+    $album = App\Album::find($id);
+    $base64 = "data:image/jpg;base64,{{chunk_split(base64_encode(strval($album->image)))}}";
+   
+    return  $base64;
+});
+
 Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/albums', 'AlbumsController@index');
     Route::get('/songs','SongsController@index');
     Route::get('/artists', 'ArtistsController@index');
+    Route::post('/albums/submit','AlbumsController@store');
+
     Route::get('/artists/{id}/albums', 'ArtistsController@getAlbums');
+    Route::get('/artists/all', 'ArtistsController@getArtists');
+
     Route::get('/home', 'HomeController@index')->name('home');
+
+    Route::group(['middleware' => ['can:delete songs']], function () {
+         
+    });
 
     Route::group(['middleware' => ['can:delete songs']], function () {
          Route::post('/songs/delete/{id}','SongsController@destroy');
