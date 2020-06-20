@@ -36,7 +36,7 @@
 			@foreach ($songs as $song)
 				<tr>
 					<th scope="row">{{ $song->id }}</th>
-					<td>{{ $song->name }}</td>
+					<td><a href="{{$song->youtube_link}}">{{ $song->name }}</a></td>
 					<td>
 						<div class="row">
 							<div class="col">
@@ -79,7 +79,7 @@
 			@endforeach
 		</tbody>
 	</table>
-	<button type="button" class="btn btn-primary"data-toggle="modal" data-target="#modalSong">Add Song</button>
+	<button type="button" class="btn btn-primary"data-toggle="modal" data-target="#modalAddSong">Add Song</button>
 	@include('layouts.modals.songs.add')
 	@include('layouts.modals.songs.edit')
 	@include('layouts.modals.songs.delete')
