@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Song extends Model
 {
-    protected $fillable = ['name', 'artist','duration','youtube_link'];
+    protected $fillable = ['name', 'artists','duration','youtube_link'];
     protected $table = 'songs';
 
     public function album()

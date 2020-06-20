@@ -41,22 +41,25 @@ class SongsController extends Controller
      */
     public function store(Request $request)
     {   
+        
         $this->validate($request,[
             'name' => 'required',
-            'artist' => 'required',
+            'artists' => "required|array|min:1",
+            'artists.*'=> "required|distinct",
             'album' => 'required',
             'youtube_link' => 'required'
         ]);
     
         $song = new Song;
-        $artist = Artist::find($request->artist);
         $album = Album::find($request->album);
+
         $song->name = $request->name;
         $song->album()->associate($album);
         $song->duration = $request->duration;
         $song->youtube_link = $request->youtube_link;
+
         $song->save();
-        $song->artists()->attach($artist);
+        $song->artists()->attach($request->artists);
         return Redirect::back()->with('success', '!');
     }
 
@@ -91,6 +94,8 @@ class SongsController extends Controller
      */
     public function update(Request $request)
     {
+       
+        
         $song = Song::find($request->id);
         $artist = Artist::find($request->artist);
         $album = Album::find($request->album);

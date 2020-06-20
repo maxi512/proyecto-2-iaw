@@ -40,13 +40,13 @@ Route::group(['middleware' => ['auth']], function() {
          Route::post('/songs/delete/{id}','SongsController@destroy');
     });
 
-    Route::group(['middleware' => ['can:edit songs']], function () {
+    Route::group(['middleware' => ['can:update songs']], function () {
         Route::post('/songs/submit','SongsController@store');
         Route::post('/songs/update','SongsController@update');
     });
     
 
-    Route::group(['middleware' => ['can:edit artists']], function () {
+    Route::group(['middleware' => ['can:update artists']], function () {
         Route::post('/artists/submit', 'ArtistsController@store');
         Route::post('/artists/update', 'ArtistsController@update');
     });

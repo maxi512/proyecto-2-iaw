@@ -29,23 +29,37 @@
                     <label for="recipient-name" class="col-form-label">Name:</label>
                     <input type="text" name="name" class="form-control" id="recipient-name">
 
-                    <label for="selectArtist" class="col-form-label">Artist:</label>
-                    <select name="artist" class="form-control" id="selectArtist">
-                        <option value="" selected disabled hidden>Choose here</option>
-                        @foreach ($artists as $artist)
-                            <option value="{{ $artist->id }}">{{ $artist->name }}</option>
-                        @endforeach
-                    </select>
-
-                    <label for="selectAlbum" class="col-form-label">Album:</label>
-                    <select name="album" class="form-control sr-only" id="selectAlbum"></select>
-
                     <label for="recipient-name" class="col-form-label">Youtube Link:</label>
                     <input type="text" name="youtube_link" class="form-control">
                     
                     <label for="recipient-name" class="col-form-label">Duration:</label>
                     <input type="text" name="duration" class="form-control">
+
+                    <label for="artists" class="col-form-label">Artists:</label>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <select name="artists[]" class="form-control my-1">
+                                    @foreach ($artists as $artist)
+                                        <option value="{{ $artist->id }}">{{$artist->name}}</option>
+                                    @endforeach
+                                </select>
+                                <div id="artists"></div>
+                            </div>
+                            <div class="col-6 d-flex align-items-center">
+                                <button type="button" class="btn btn-success btn-sm mr-2" id="addSelectArtist">Add Artist</button>
+                                <button type="button" class="btn btn-secondary btn-sm" id="deleteSelectArtist">Remove Artist</button>
+                            </div>
+                        </div>
+                    </div>
+                    <label for="recipient-name" class="col-form-label">Album:</label>
+                    <select name="album" class="form-control my-1">
+                            @foreach ($albums as $album)
+                                <option value="{{ $album->id }}">{{ $album->name }}</option>
+                            @endforeach
+                    </select>
                 </form>
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -58,24 +72,25 @@
     $('#modalAddSong').on('hide.bs.modal', function (e) {
         $('#selectAlbum').addClass('sr-only');
         $("#selectArtist").prop("selectedIndex", 0);
-        $('#modalAddSong').on('hidden.bs.modal', function () {
         $('#addSongModalAlert').addClass('d-none');
-    });
     })
 </script>
 <script>
-    $(function() {
-        $('#selectArtist').change(function() {
-            $('#selectAlbum').removeClass('sr-only');
-            var url = '{{ url('artists') }}/' + $(this).val() + '/albums/';
-            $.get(url, function(data) {
-                var select = $('#selectAlbum');
-                select.empty();
-                $.each(data, function(key, value) {
-                    select.append('<option value=' + value.id + '>' + value.name + '</option>');
-                });
+    $('#addSelectArtist').on('click', function(){
+        var url = '/artists/all';
+        $.get(url, function(data) {
+            var artistsDiv = $('#artists');
+
+            artistsDiv.append(' <select name="artists[]" class="form-control my-2"></select>')
+
+            $.each(data, function(key, value) {
+                $('#artists select:last-child').append('<option value=' + value.id + '>' + value.name + '</option>');
             });
-        });
+        });    
+    });
+
+    $('#deleteSelectArtist').on('click', function(){
+             $('#artists select:last-child').remove();
     });
 </script>
 @if(!empty(Session::get('errors')) > 0 || Session::get('success'))

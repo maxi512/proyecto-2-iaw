@@ -42,6 +42,13 @@ class AlbumsController extends Controller
      */
     public function store(Request $request)
     { 
+        $this->validate($request,[
+            'name' => 'required',
+            'artists' => "required|array|min:1",
+            'artists.*'=> "required|distinct",
+            'cover' => 'required|mimes:jpeg,jpg,png,gif|required|max:10000',
+        ]);
+
         $file = $request->file('cover');
         $content = $file->openFile()->fread($file->getSize());
 
@@ -50,15 +57,10 @@ class AlbumsController extends Controller
         $album->image = base64_encode($content);
 
         $artists = $request->artists;
-        
-        if(count(array_unique($artists)) < count($artists)){
-            return Redirect::back()->withErrors(['Select distint artists!']);   
-        }
-        else{
-            $album->save();
-            $album->artists()->attach($artists);
-            return Redirect::back()->with('success', 'Album Created!'); 
-        }
+       
+        $album->save();
+        $album->artists()->attach($artists);
+        return Redirect::back()->with('success', 'Album Created!'); 
        
     }
 
