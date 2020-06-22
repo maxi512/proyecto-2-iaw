@@ -10,19 +10,24 @@
             <div class="modal-body">
                 <div id="addSongModalAlert">
                     @if(count($errors) > 0)
+                        @if ($errors->has('addError'))
                             <div class="alert alert-danger">
                                 <ul>
                                     @foreach ($errors->all() as $error)
-                                        <li>{{$error}}</li>
+                                            @if ($loop->last)
+                                            @else
+                                                 <li>{{$error}}</li>
+                                            @endif
                                     @endforeach
                                 </ul>
                             </div>
-                        @endif
-                        @if(Session::has('success'))
-                            <div class="alert alert-success">
-                                <p>Data added!</p>
-                            </div>
-                        @endif
+                            @endif
+                    @endif
+                    @if(Session::has('success'))
+                        <div class="alert alert-success">
+                            <p>Data added!</p>
+                        </div>
+                    @endif
                 </div>
                 <form id="formSong" action="/songs/submit" method="POST"> 
                      {{ csrf_field() }}
@@ -38,26 +43,23 @@
                     <label for="artists" class="col-form-label">Artists:</label>
                     <div class="container">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-6" id="artists">
                                 <select name="artists[]" class="form-control my-1">
                                     @foreach ($artists as $artist)
                                         <option value="{{ $artist->id }}">{{$artist->name}}</option>
                                     @endforeach
                                 </select>
-                                <div id="artists"></div>
                             </div>
                             <div class="col-6 d-flex align-items-center">
-                                <button type="button" class="btn btn-success btn-sm mr-2" id="addSelectArtist">Add Artist</button>
-                                <button type="button" class="btn btn-secondary btn-sm" id="deleteSelectArtist">Remove Artist</button>
+                                <button type="button" class="btn btn-success btn-sm mr-2" 
+                                    id="addSelectArtist" onclick="addSelect()">Add Artist</button>
+                                <button type="button" class="btn btn-secondary btn-sm" 
+                                    id="deleteSelectArtist" onclick="removeSelect()">Remove Artist</button>
                             </div>
                         </div>
                     </div>
                     <label for="recipient-name" class="col-form-label">Album:</label>
-                    <select name="album" class="form-control my-1">
-                            @foreach ($albums as $album)
-                                <option value="{{ $album->id }}">{{ $album->name }}</option>
-                            @endforeach
-                    </select>
+                    <select name="album" class="form-control my-1" id="albumAddSelect"></select>
                 </form>
                 
             </div>
@@ -69,34 +71,10 @@
     </div>
 </div>
 <script>
-    $('#modalAddSong').on('hide.bs.modal', function (e) {
-        $('#selectAlbum').addClass('sr-only');
-        $("#selectArtist").prop("selectedIndex", 0);
-        $('#addSongModalAlert').addClass('d-none');
+    $('#modalAddSong').on('hide.bs.modal', function () {
+        onHideAddSong()
     })
 </script>
-<script>
-    $('#addSelectArtist').on('click', function(){
-        var url = '/artists/all';
-        $.get(url, function(data) {
-            var artistsDiv = $('#artists');
-
-            artistsDiv.append(' <select name="artists[]" class="form-control my-2"></select>')
-
-            $.each(data, function(key, value) {
-                $('#artists select:last-child').append('<option value=' + value.id + '>' + value.name + '</option>');
-            });
-        });    
-    });
-
-    $('#deleteSelectArtist').on('click', function(){
-             $('#artists select:last-child').remove();
-    });
-</script>
-@if(!empty(Session::get('errors')) > 0 || Session::get('success'))
-    <script>
-        $(function() {
-            $('#modalAddSong').modal('show');
-        });
-    </script>
+@if((!empty(Session::get('errors')) > 0 && $errors->has('addError')) || Session::get('success'))
+    <script> console.log("xd"); onBackFromController(); </script>
 @endif

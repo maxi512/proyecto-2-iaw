@@ -46,9 +46,9 @@
 </div>
 <script>
     $('.edit').on('click', function() {
-    $('#select').val($(this).data('country'))
-    $('#inputName').val($(this).data('name'))
-    $('#artistHide').val($(this).data('id'))
+        $('#select').val($(this).data('country'))
+        $('#inputName').val($(this).data('name'))
+        $('#artistHide').val($(this).data('id'))
     });
 </script>
 @if(session('status') || $errors->first() == 'No changes detected.')

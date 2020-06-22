@@ -65,7 +65,7 @@
     });
 </script>
 
-@if((!empty(Session::get('errors')) > 0 && !($errors->first() == 'No changes detected.'))|| Session::get('success'))
+@if((!empty(Session::get('errors')) && $errors->first() != 'No changes detected.') || Session::get('success'))
     <script>
         $(function() {
             $('#modalAddAlbum').modal('show');

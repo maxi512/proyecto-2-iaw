@@ -8,6 +8,7 @@ use DB;
 use App\Song;
 use App\Artist;
 use App\Album;
+use Validator;
 class SongsController extends Controller
 {
     /**
@@ -42,13 +43,20 @@ class SongsController extends Controller
     public function store(Request $request)
     {   
         
-        $this->validate($request,[
+       $validator =  Validator::make($request->all(),[
             'name' => 'required',
             'artists' => "required|array|min:1",
-            'artists.*'=> "required|distinct",
+            'artists.*'=> "required|distinct",  
             'album' => 'required',
-            'youtube_link' => 'required'
+            'youtube_link' => 'required|url',
+            'duration' => 'required'
         ]);
+        
+        $validator->after(function($validator) {
+            $validator->errors()->add('addError', 'NO');
+        });
+
+        $validator->validate();
     
         $song = new Song;
         $album = Album::find($request->album);
@@ -94,18 +102,34 @@ class SongsController extends Controller
      */
     public function update(Request $request)
     {
-       
+        $validator =  Validator::make($request->all(),[
+            'name' => 'required',
+            'artists' => "required|array|min:1",
+            'artists.*'=> "required|distinct",
+            'album' => 'required',
+            'youtube_link' => 'required|url',
+            'duration' => 'required'
+        ]);
+        
+        $validator->after(function($validator) {
+            if($validator->errors()->count() > 0){
+                $validator->errors()->add('updateError', 'No changes on update.');
+            }
+        });
+
+        $validator->validate();
         
         $song = Song::find($request->id);
-        $artist = Artist::find($request->artist);
         $album = Album::find($request->album);
 
         $song->name = $request->name;
         $song->album()->associate($album);
         $song->duration = $request->duration;
         $song->youtube_link = $request->youtube_link;
+        
         $song->artists()->detach();
-        $song->artists()->attach($artist);
+        $song->artists()->attach($request->artists);
+        
 
         if ($song->isDirty()) {
             $song->save();
@@ -114,7 +138,6 @@ class SongsController extends Controller
         else{
              return Redirect::back()->withErrors(['No changes detected.']);
         }
-        
     }
 
     /**
@@ -129,5 +152,10 @@ class SongsController extends Controller
         $song->delete();
         return Redirect::back()->with('status', 'Artist Deleted!');
 
+    }
+
+    public function getArtists($id){
+        $song = Song::find($id);
+        return $song->artists;
     }
 }

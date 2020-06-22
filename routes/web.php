@@ -24,7 +24,11 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/albums', 'AlbumsController@index');
     Route::get('/songs','SongsController@index');
-    Route::get('/artists', 'ArtistsController@index');
+    Route::get('/songs/{id}/artists', 'SongsController@getArtists');
+    Route::get('/albums', 'AlbumsController@index');
+
+    Route::get('/albums/albumsfromlist', 'AlbumsController@albumsFromList');
+
     Route::post('/albums/submit','AlbumsController@store');
 
     Route::get('/artists/{id}/albums', 'ArtistsController@getAlbums');

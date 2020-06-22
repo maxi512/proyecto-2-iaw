@@ -31,9 +31,6 @@ class AlbumsController extends Controller
         //
     }
 
-    private function areRepeatedElements($array){
-        return count(array_unique($array))<count($array);
-    }
     /**
      * Store a newly created resource in storage.
      *
@@ -119,5 +116,14 @@ class AlbumsController extends Controller
 
     public function allAlbums(){
         return Album::all();
+    }
+
+    public function albumsFromList(Request $request){
+        \Log::info($request->input());
+        $collection = collect([]);
+        foreach($request->artists as $artist){
+            $collection = $collection->merge(Artist::find($artist)->albums->toArray());
+        }
+        return $collection->unique()->values()->all();
     }
 }
