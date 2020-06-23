@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('content')
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+	<script src="/js/artists/addArtist.js"></script>
+	<script src="/js/artists/editArtist.js"></script>
+	<script src="/js/artists/deleteArtist.js"></script>
     <table class="table table-striped table-bordered" id="example1" style="width:100%">
 		<thead>
 			<tr>
@@ -37,13 +39,15 @@
 							<button type="button" class="btn btn-primary btn-sm edit" 
 									data-toggle="modal" data-target="#editModal" 
 									data-country="{{$artist->country}}" 
-									data-name="{{$artist->name}}" data-id="{{$artist->id}}">Edit
+									data-name="{{$artist->name}}" data-id="{{$artist->id}}"
+									onclick="editArtist($(this))">Edit
 							</button>
 						@endcan
 						@can('delete artists')
 							<button type="button" class="btn btn-danger btn-sm delete" 
 								data-toggle="modal" data-target="#deleteModal" 
-								data-name="{{$artist->name}}" data-id="{{$artist->id}}">Delete</button>
+								data-name="{{$artist->name}}" data-id="{{$artist->id}}"
+								onclick="deleteArtist($(this))">Delete</button>
 						@endcan
 					</td>
 				</tr>

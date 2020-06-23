@@ -37,22 +37,7 @@
         </div>
     </div>
 </div>
-<script>
-    $('.delete').on('click', function() {
-    $('#artistHideDelete').val($(this).data('id'))
-    $('#artistName').html($(this).data('name'))
-    $('#formDeleteArtist').attr('action','/artists/delete/'.concat($(this).data('id')))
-    });
-</script>
+
 @if(session('status') || $errors->first() == 'No changes detected.')
-     <script>
-        $(function() {
-            $('deleteModal').modal('show');
-            $('#deleteButton').addClass('d-none');
-        });
-        $('#deleteModal').on('hidden.bs.modal', function () {
-            $('#modalAlertDeleteArtist').addClass('d-none');
-            $('#deleteButton').removeClass('d-none');
-        });
-    </script>
+     <script>onBackFromControllerDelete()</script>
 @endif

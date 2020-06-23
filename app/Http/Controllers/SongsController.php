@@ -113,7 +113,7 @@ class SongsController extends Controller
         
         $validator->after(function($validator) {
             if($validator->errors()->count() > 0){
-                $validator->errors()->add('updateError', 'No changes on update.');
+                $validator->errors()->add('updateError', 'None');
             }
         });
 
@@ -129,15 +129,10 @@ class SongsController extends Controller
         
         $song->artists()->detach();
         $song->artists()->attach($request->artists);
-        
 
-        if ($song->isDirty()) {
-            $song->save();
-            return Redirect::back()->with('status', 'Song Updated!');
-        }
-        else{
-             return Redirect::back()->withErrors(['No changes detected.']);
-        }
+        $song->save();
+        return Redirect::back()->with('status', 'Song Updated!');
+        
     }
 
     /**
@@ -150,7 +145,7 @@ class SongsController extends Controller
     {
         $song = Song::find($id);
         $song->delete();
-        return Redirect::back()->with('status', 'Artist Deleted!');
+        return Redirect::back()->with('statusDelete', 'Artist Deleted!');
 
     }
 

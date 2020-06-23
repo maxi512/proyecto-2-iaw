@@ -13,7 +13,10 @@
                         <div class="alert alert-danger">
                             <ul>
                                 @foreach ($errors->all() as $error)
-                                    <li>{{$error}}</li>
+                                    @if ($loop->last)
+                                    @else
+                                        <li>{{$error}}</li>
+                                    @endif
                                 @endforeach
                             </ul>
                         </div>
@@ -36,8 +39,10 @@
                         <div class="container" id="artists"></div>
                     </div> 
                 </form>
-                <button class="btn btn-success btn-sm" id="addSelectArtist">Add Artist</button>
-                <button class="btn btn-secondary btn-sm" id="deleteSelectArtist">Remove Artist</button>
+                <button class="btn btn-success btn-sm" id="addSelectArtist" 
+                    onclick="addSelectArtist()">Add Artist</button>
+                <button class="btn btn-secondary btn-sm" id="deleteSelectArtist" 
+                    onclick="removeSelectArtist()">Remove Artist</button>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -46,32 +51,8 @@
         </div>
     </div>
 </div>
-<script>
-    $('#addSelectArtist').on('click', function(){
-        var url = '/artists/all';
-        $.get(url, function(data) {
-            var artistsDiv = $('#artists');
-
-            artistsDiv.append(' <select name="artists[]" class="form-control my-1"></select>')
-
-            $.each(data, function(key, value) {
-                $('#artists select:last-child').append('<option value=' + value.id + '>' + value.name + '</option>');
-            });
-        });    
-    });
-
-    $('#deleteSelectArtist').on('click', function(){
-             $('#artists select:last-child').remove();
-    });
-</script>
-
-@if((!empty(Session::get('errors')) && $errors->first() != 'No changes detected.') || Session::get('success'))
+@if((!empty(Session::get('errors')) && $errors->has('addError')) || Session::get('success'))
     <script>
-        $(function() {
-            $('#modalAddAlbum').modal('show');
-        });
-        $('#modalAddAlbum').on('hidden.bs.modal', function () {
-            $('#modalAlert').addClass('d-none');
-        });
+        onBackFromControllerAddAlbum();
     </script>
 @endif

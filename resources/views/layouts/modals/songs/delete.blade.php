@@ -8,20 +8,13 @@
                 </button>
             </div>
             <div class="modal-body">
-                 <div class="alert alert-warning" role="alert">
+                 <div class="alert alert-warning" role="alert" id="warningSong">
                         <p>Are you sure to delete to <b id="songName"></b>?</p>
                     </div>
                 <div id="modalAlertDeleteSong">
-                    @if(session('status'))
+                    @if(session('statusDelete'))
                         <div class="alert alert-success">
-                            <p>{{ session('status') }}</p>
-                        </div>
-                    @endif
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                <li>{{$errors->first()}}</li>
-                            </ul>
+                            <p>{{ session('statusDelete') }}</p>
                         </div>
                     @endif
                 </div>
@@ -37,23 +30,6 @@
         </div>
     </div>
 </div>
-<script>
-    $('.delete').on('click', function() {
-    $('#songHideDelete').val($(this).data('id'))
-    
-    $('#songName').html($(this).data('name'))
-    $('#formDeleteSong').attr('action','/songs/delete/'.concat($(this).data('id')))
-    });
-</script>
-@if(session('status') || $errors->first() == 'No changes detected.')
-     <script>
-        $(function() {
-            $('deleteSongModal').modal('show');
-            $('#deleteButton').addClass('d-none');
-        });
-        $('#deleteSongModal').on('hidden.bs.modal', function () {
-            $('#modalAlertDeleteSong').addClass('d-none');
-            $('#editButton').removeClass('d-none');
-        });
-    </script>
+@if(session('statusDelete'))
+     <script>onBackFromControllerDelete()</script>
 @endif

@@ -7,6 +7,7 @@ use App\Album;
 use DB;
 use Redirect;
 use App\Artist;
+use Validator;
 
 class AlbumsController extends Controller
 {
@@ -38,13 +39,22 @@ class AlbumsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    { 
-        $this->validate($request,[
+    {   
+
+        $validator =  Validator::make($request->all(),[
             'name' => 'required',
             'artists' => "required|array|min:1",
             'artists.*'=> "required|distinct",
             'cover' => 'required|mimes:jpeg,jpg,png,gif|required|max:10000',
         ]);
+        
+        $validator->after(function($validator) {
+            if($validator->errors()->count() > 0){
+                $validator->errors()->add('addError', 'No changes on store.');
+            }
+        });
+        
+        $validator->validate();
 
         $file = $request->file('cover');
         $content = $file->openFile()->fread($file->getSize());
@@ -106,24 +116,21 @@ class AlbumsController extends Controller
         //
     }
 
-    public function getCover($id){
-        $album = Album::find($id);
-        return response()->make($album->image, 200, array(
-        'Content-Type' => (new finfo(FILEINFO_MIME))->buffer($album->image)
-        ));
-    
-    }
-
     public function allAlbums(){
         return Album::all();
     }
 
     public function albumsFromList(Request $request){
-        \Log::info($request->input());
         $collection = collect([]);
         foreach($request->artists as $artist){
             $collection = $collection->merge(Artist::find($artist)->albums->toArray());
         }
         return $collection->unique()->values()->all();
+    }
+
+    public function getCover($id){
+        $album = Album::find($id);
+        
+        return strval($album->image);
     }
 }

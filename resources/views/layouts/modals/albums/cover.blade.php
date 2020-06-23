@@ -16,8 +16,3 @@
         </div>
     </div>	
 </div>
-<script>
-    $('.showCover').on('click', function() {
-        $('#modal-body').html('<img src="data:image/jpg;base64,'+ $(this).data('id')+'" height="300" width="300">')
-    });
-</script>

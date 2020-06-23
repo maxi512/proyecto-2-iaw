@@ -14,7 +14,7 @@
                             <p>{{ session('status') }}</p>
                         </div>
                     @endif
-                    @if($errors->any())
+                    @if($errors->has('updateError'))
                         <div class="alert alert-danger">
                             <ul>
                                 <li>{{$errors->first()}}</li>
@@ -44,24 +44,6 @@
         </div>
     </div>
 </div>
-<script>
-    $('.edit').on('click', function() {
-        $('#select').val($(this).data('country'))
-        $('#inputName').val($(this).data('name'))
-        $('#artistHide').val($(this).data('id'))
-    });
-</script>
-@if(session('status') || $errors->first() == 'No changes detected.')
-     <script>
-        $(function() {
-            $('#editModal').modal('show');
-            $('#formEditArtist').addClass('d-none');
-            $('#editButton').addClass('d-none');
-        });
-        $('#editModal').on('hidden.bs.modal', function () {
-            $('#modalAlertEditArtist').addClass('d-none');
-            $('#formEditArtist').removeClass('d-none');
-            $('#editButton').removeClass('d-none');
-        });
-    </script>
+@if($errors->has('updateError') || Session::get('status'))
+    <script>onBackFromControllerEdit()</script>
 @endif

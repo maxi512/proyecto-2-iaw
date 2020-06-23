@@ -76,5 +76,5 @@
     })
 </script>
 @if((!empty(Session::get('errors')) > 0 && $errors->has('addError')) || Session::get('success'))
-    <script> console.log("xd"); onBackFromController(); </script>
+    <script> onBackFromController(); </script>
 @endif

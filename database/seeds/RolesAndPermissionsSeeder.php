@@ -30,6 +30,8 @@ class RolesAndPermissionsSeeder extends Seeder
         $role->givePermissionTo('update songs');
         $role->givePermissionTo('update artists');
         $role->givePermissionTo('update albums');
+        $role->givePermissionTo('delete songs');
+        
 
         $role = Role::create(['name' => 'super-admin']);
         $role->givePermissionTo(Permission::all());

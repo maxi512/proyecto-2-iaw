@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
-	
-	<script src="/js/addSong.js"></script>
-	<script src="/js/editSong.js"></script>
+	<script src="/js/songs/addSong.js"></script>
+	<script src="/js/songs/editSong.js"></script>
+	<script src="/js/songs/deleteSong.js"></script>
 	<table class="table table-striped table-bordered" id="songsTable" style="width:100%">
 		<thead>
 			<tr>
@@ -59,21 +59,21 @@
 					</td>
 					<td>
 						@can('update songs')
+
 							<button type="button" class="btn btn-primary btn-sm edit" 
 								data-toggle="modal" data-target="#editSongModal" 
 								data-album="{{$song->album->id}}"
 								data-link="{{$song->youtube_link}}"
 								data-duration="{{$song->duration}}"
-								data-artist="{{$song->artists()->first()->id}}"  
 								data-name="{{$song->name}}" data-id="{{$song->id}}">Edit
 							</button>	
-						@endcan
 
+						@endcan
 						@can('delete songs')
 							<button type="button" class="btn btn-danger btn-sm delete"
 									data-toggle="modal" 
 									data-name="{{$song->name}}" data-id="{{$song->id}}" 
-									data-target="#deleteSongModal">Delete
+									data-target="#deleteSongModal" onclick="deleteSong($(this))">Delete
 							</button>
 						@endcan
 					</td>

@@ -9,11 +9,13 @@
             </div>
             <div class="modal-body">
                 <div id="modalAlert">
-                    @if(count($errors) > 0)
+                    @if($errors->has('addError'))
                         <div class="alert alert-danger">
                             <ul>
                                 @foreach ($errors->all() as $error)
-                                    <li>{{$error}}</li>
+                                    @unless ($loop->last)
+                                        <li>{{$error}}</li>
+                                    @endunless
                                 @endforeach
                             </ul>
                         </div>
@@ -39,19 +41,11 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="formArtist">Edit</button>
+                <button type="submit" class="btn btn-primary" form="formArtist">Add</button>
             </div>
         </div>
     </div>
 </div>
-
-@if((!empty(Session::get('errors')) > 0 && !($errors->first() == 'No changes detected.'))|| Session::get('success'))
-    <script>
-        $(function() {
-            $('#myModal').modal('show');
-        });
-        $('#myModal').on('hidden.bs.modal', function () {
-            $('#modalAlert').addClass('d-none');
-        });
-    </script>
+@if($errors->has('addError') || Session::get('success'))
+    <script>onBackFromControllerAdd()</script>
 @endif

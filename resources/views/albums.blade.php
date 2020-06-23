@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+	<script src="/js/albums/coverAlbum.js"></script>
+	<script src="/js/albums/addAlbum.js"></script>
 	<table class="table table-striped table-bordered" id="tableAlbums" style="width:100%">
 		<thead>
 			<tr>
@@ -42,7 +43,7 @@
 											{{ $artist->name }},
 										@endif
 									@endforeach
-								<a/>
+								</a>
 							</div>
 							<div class="col">
 								
@@ -52,7 +53,7 @@
 					<td>
 						<button type="button" class="btn btn-primary btn-sm showCover" 
 								data-toggle="modal" data-target="#modalCover" 
-								data-id="{{strval($album->image)}}">
+								data-id="{{ $album->id }}" onclick="showCover($(this))">
 							Cover
 						</button>
 					</td>

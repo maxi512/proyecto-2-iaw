@@ -7,6 +7,7 @@ use App\Artist as Artist;
 Use Redirect;
 use Countries;
 use DB;
+use Validator;
 
 class ArtistsController extends Controller
 {
@@ -40,10 +41,18 @@ class ArtistsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $validator =  Validator::make($request->all(),[
             'name' => 'required',
             'country' => 'required'
         ]);
+        
+        $validator->after(function($validator) {
+            if($validator->errors()->count() > 0){
+                $validator->errors()->add('addError', 'No changes on store.');
+            }
+        });
+        $validator->validate();
+
         $artist = new Artist;
         $artist->name = $request->name;
         $artist->country = $request->country;
@@ -81,18 +90,26 @@ class ArtistsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $req)
-    {
+    {   
+        $validator =  Validator::make($req->all(),[
+            'name' => 'required',
+            'country' => 'required'
+        ]);
+        
+        $validator->after(function($validator) {
+            if($validator->errors()->count() > 0){
+                $validator->errors()->add('updateError', 'updateError');
+            }
+        });
+        $validator->validate();
+
         $artist = Artist::find($req->id);
         $artist->name = $req->name;
         $artist->country = $req->country;
-        
-        if ($artist->isDirty()) {
-            $artist->save();
-            return Redirect::back()->with('status', 'Artist Updated!');
-        }
-        else{
-             return Redirect::back()->withErrors(['No changes detected.']);
-        }
+
+        $artist->save();
+        return Redirect::back()->with('status', 'Artist Updated!');
+       
         
     }
 
