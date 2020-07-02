@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
 	<script src="/js/users/editUsers.js"></script>
 	<table class="table table-striped table-bordered" id="usersTable" style="width:100%">
 		<thead>
