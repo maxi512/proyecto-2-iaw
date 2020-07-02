@@ -19,7 +19,6 @@ class Artist extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'country' => $this->country,
-            'songs' => SongResource::collection($this->songs)
         ];
     }
 }
