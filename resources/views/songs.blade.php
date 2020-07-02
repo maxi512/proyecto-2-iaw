@@ -3,6 +3,7 @@
 	<script src="/js/songs/addSong.js"></script>
 	<script src="/js/songs/editSong.js"></script>
 	<script src="/js/songs/deleteSong.js"></script>
+
 	<table class="table table-striped table-bordered" id="songsTable" style="width:100%">
 		<thead>
 			<tr>
@@ -31,6 +32,12 @@
 						<div class="ml-auto"><i class="fas fa-sort" aria-hidden="true"></i></div>
 					</div>
 				</th>
+				<th>
+					<div class="d-flex">
+						<div>Duration</div>
+						<div class="ml-auto"><i class="fas fa-sort" aria-hidden="true"></i></div>
+					</div>
+				</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -54,20 +61,18 @@
 							</div>
 						</div>
                     </td>
-                    <td>
-                        {{ $song->album->name }}
-					</td>
-					<td>
+                    <td>{{ $song->album->name }}</td>
+					<td>{{ $song->duration }}</td>
+					<td class="text-center">
 						@can('update songs')
-
 							<button type="button" class="btn btn-primary btn-sm edit" 
 								data-toggle="modal" data-target="#editSongModal" 
 								data-album="{{$song->album->id}}"
 								data-link="{{$song->youtube_link}}"
 								data-duration="{{$song->duration}}"
-								data-name="{{$song->name}}" data-id="{{$song->id}}">Edit
+								data-name="{{$song->name}}" data-id="{{$song->id}}"
+								onclick="onClickEditSongButton($(this))">Edit
 							</button>	
-
 						@endcan
 						@can('delete songs')
 							<button type="button" class="btn btn-danger btn-sm delete"
@@ -81,12 +86,12 @@
 			@endforeach
 		</tbody>
 	</table>
-	@include('layouts.modals.songs.add')
-
-	<button type="button" class="btn btn-primary"
+	
+	<button type="button" class="btn btn-success"
 		data-toggle="modal" data-target="#modalAddSong"
 		onclick="updateSelectAlbumsAdd()">Add Song</button>
 
+	@include('layouts.modals.songs.add')
 	@include('layouts.modals.songs.edit')
 	@include('layouts.modals.songs.delete')
 	

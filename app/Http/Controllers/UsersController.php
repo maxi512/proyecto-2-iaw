@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use DB;
 use Redirect;
+use Validator;
 
 class UsersController extends Controller
 {
@@ -22,47 +23,18 @@ class UsersController extends Controller
         return view('users',compact('users','roles'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+     private function getAddValidator($request){
+        $validator =  Validator::make($request->all(),[
+            'name' => 'required',
+            'role' => "required",
+        ]);
+        
+        $validator->after(function($validator) {
+            if($validator->errors()->count() > 0){
+                $validator->errors()->add('updateError', 'None');
+            }
+        });
+        return $validator;
     }
 
     /**
@@ -74,34 +46,17 @@ class UsersController extends Controller
      */
     public function update(Request $req)
     {   
+        $validator = $this->getAddValidator($req);
+        $validator->validate();
     
         $user = User::find($req->id);
-
         $role = DB::table('roles')->where('id', $req->role)->get()->first();
-        $actualRole = DB::table('roles')->where('id', $user->roles->first()->id)->get()->first();
-
         $user->name = $req->name;
-        if ($user->isDirty() | $role->id != $actualRole->id) {
 
-            $user->syncRoles([$role->name]);
-            $user->save();
-            
-            return Redirect::back()->with('status', 'User Updated!');
-        }
-        else{
-             return Redirect::back()->withErrors(['No changes detected.']);
-        }
+        $user->syncRoles([$role->name]);
+        $user->save();
+
+        return Redirect::back()->with('status', 'User Updated!');
         
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

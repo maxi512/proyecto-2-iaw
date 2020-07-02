@@ -1,4 +1,4 @@
-<div class="modal fade"  id="modalAddSong" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade"  id="modalAddSongEditAlbum" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" >
         <div class="modal-content">
             <div class="modal-header">
@@ -29,7 +29,7 @@
                         </div>
                     @endif
                 </div>
-                <form id="formSong" action="/songs/submit" method="POST"> 
+                <form id="formSongAlbumEdit" action="/songs/submit" method="POST"> 
                      {{ csrf_field() }}
                     <label for="recipient-name" class="col-form-label">Name:</label>
                     <input type="text" name="name" class="form-control" id="recipient-name">
@@ -44,37 +44,33 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-6" id="artists">
-                                <select name="artists[]" class="form-control my-1" onchange=" updateSelectAlbumsAdd();">
-                                    @foreach ($artists as $artist)
+                                <select name="artists[]" class="form-control my-1">
+                                    @foreach ($album->artists as $artist)
                                         <option value="{{ $artist->id }}">{{$artist->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-6 d-flex align-items-center">
-                                <button type="button" class="btn btn-success btn-sm mr-2" 
-                                    id="addSelectArtist" onclick="addSelect()">Add Artist</button>
+                                <button type="button" class="btn btn-success btn-sm mr-2"
+                                    data-album="{{ $album->id }}" 
+                                    id="addSelectArtist" onclick="addSelectSongs($(this))">Add Artist</button>
                                 <button type="button" class="btn btn-secondary btn-sm" 
-                                    id="deleteSelectArtist" onclick="removeSelect()">Remove Artist</button>
+                                    id="deleteSelectArtist" onclick="removeSelectSongs()">Remove Artist</button>
                             </div>
                         </div>
                     </div>
-                    <label for="recipient-name" class="col-form-label">Album:</label>
-                    <select name="album" class="form-control my-1" id="albumAddSelect"></select>
+                    <input type="hidden" name="album" id="albumHideAddSong">
                 </form>
                 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="formSong">Add</button>
+                <button type="submit" class="btn btn-primary" form="formSongAlbumEdit">Add</button>
             </div>
         </div>
     </div>
 </div>
-<script>
-    $('#modalAddSong').on('hide.bs.modal', function () {
-        onHideAddSong()
-    })
-</script>
-@if(($errors->count() > 0) && ($errors->has('addError')) || Session::get('success'))
-    <script> onBackFromController(); </script>
+
+@if($errors->has('addError') || Session::get('success'))
+    <script>onBackFromController(); </script>
 @endif

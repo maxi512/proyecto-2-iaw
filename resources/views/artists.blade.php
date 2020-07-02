@@ -34,7 +34,7 @@
 					<th scope="row">{{ $artist->id }}</th>
 					<td>{{ $artist->name }}</td>
 					<td>{{$artist->country}}</td>
-					<td> 
+					<td class="text-center"> 
 						@can('update artists')
 							<button type="button" class="btn btn-primary btn-sm edit" 
 									data-toggle="modal" data-target="#editModal" 
@@ -43,12 +43,15 @@
 									onclick="editArtist($(this))">Edit
 							</button>
 						@endcan
+						
 						@can('delete artists')
 							<button type="button" class="btn btn-danger btn-sm delete" 
 								data-toggle="modal" data-target="#deleteModal" 
 								data-name="{{$artist->name}}" data-id="{{$artist->id}}"
 								onclick="deleteArtist($(this))">Delete</button>
 						@endcan
+							
+						
 					</td>
 				</tr>
 			@endforeach
@@ -56,7 +59,7 @@
 	</table>
 
 	@can('update artists')
-		<button type="button" class="btn btn-primary" 
+		<button type="button" class="btn btn-success" 
 		data-toggle="modal" data-target="#myModal">Add Artist</button>
 	@endcan
 

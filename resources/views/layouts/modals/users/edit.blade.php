@@ -47,24 +47,6 @@
         </div>
     </div>
 </div>
-<script>
-    $('.edit').on('click', function() {
-        $('#userNameEdit').val($(this).data('name'))
-        $('#userIdEdit').val($(this).data('id'))
-        $('#selectEditUser').val($(this).data('role'))
-        });
-</script>
-@if(session('status') || $errors->first() == 'No changes detected.')
-     <script>
-        $(function() {
-            $('#editUserModal').modal('show');
-            $('#formEditUser').addClass('d-none');
-            $('#editButton').addClass('d-none');
-        });
-        $('#editUserModal').on('hidden.bs.modal', function () {
-            $('#modalAlertEditUser').addClass('d-none');
-            $('#formEditUser').removeClass('d-none');
-            $('#editButton').removeClass('d-none');
-        });
-    </script>
+@if(session('status') || $errors->has('updateError'))
+     <script>onBackFromControllerUsers()</script>
 @endif

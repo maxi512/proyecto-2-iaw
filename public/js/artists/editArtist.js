@@ -4,7 +4,6 @@ function editArtist(button) {
     $('#artistHide').val(button.data('id'))
 }
 
-
 function onBackFromControllerEdit() {
     $('#editModal').modal('show');
     $('#formEditArtist').addClass('d-none');

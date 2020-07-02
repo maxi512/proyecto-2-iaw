@@ -10,9 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="/resources/js/app.js"></script>
-        
+    <script src="{{ asset('js/app.js') }}"></script>        
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
@@ -67,9 +65,12 @@
                                 </a>
                                 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a href="/users" class="dropdown-item">Users</a>
+                                    @can('update users')
+                                        <a href="/users" class="dropdown-item">Users</a>
+                                        <div class="dropdown-divider"></div>
+                                    @endcan
+                                    <a href="/faqs" class="dropdown-item">FAQs</a>
                                     <div class="dropdown-divider"></div>
-                                    
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

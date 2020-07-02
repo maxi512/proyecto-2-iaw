@@ -24,14 +24,35 @@ class SongsController extends Controller
         return view('songs',compact('songs','artists','albums'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    private function getStoreValidator($request){
+        $validator =  Validator::make($request->all(),[
+            'name' => 'required',
+            'artists' => "required|array|min:1",
+            'artists.*'=> "required|distinct",  
+            'album' => 'required',
+            'youtube_link' => 'required|url',
+            'duration' => 'required'
+        ]);
+        
+        $validator->after(function($validator) {
+            if($validator->errors()->count() > 0){
+                $validator->errors()->add('addError', 'None');
+            }
+        });
+
+        return $validator;
+    }
+
+    private function checkDiffArtist($album, $artistsId){
+        $artistsInSong = Artist::findMany($artistsId);
+        $diffArtist = FALSE;
+        foreach($artistsInSong as $artistInSong){
+            if(!($album->artists->contains('id', $artistInSong->id))){
+                $diffArtist = TRUE;
+            break;
+            }
+        }
+        return $diffArtist;
     }
 
     /**
@@ -42,66 +63,28 @@ class SongsController extends Controller
      */
     public function store(Request $request)
     {   
-        
-       $validator =  Validator::make($request->all(),[
-            'name' => 'required',
-            'artists' => "required|array|min:1",
-            'artists.*'=> "required|distinct",  
-            'album' => 'required',
-            'youtube_link' => 'required|url',
-            'duration' => 'required'
-        ]);
-        
-        $validator->after(function($validator) {
-            $validator->errors()->add('addError', 'NO');
-        });
-
+        $validator = $this->getStoreValidator($request);
         $validator->validate();
-    
+
         $song = new Song;
         $album = Album::find($request->album);
 
         $song->name = $request->name;
-        $song->album()->associate($album);
         $song->duration = $request->duration;
         $song->youtube_link = $request->youtube_link;
-
-        $song->save();
-        $song->artists()->attach($request->artists);
-        return Redirect::back()->with('success', '!');
+        
+        if($this->checkDiffArtist($album, $request->artists)){
+            return Redirect::back()->with('artistsError', 'You have some songs that dont match these artists');
+        }
+        else{
+            $song->album()->associate($album);
+            $song->save();
+            $song->artists()->attach($request->artists);
+            return Redirect::back()->with('success', 'Song added!');
+        } 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request)
-    {
+    private function getUpdateValidator($request){
         $validator =  Validator::make($request->all(),[
             'name' => 'required',
             'artists' => "required|array|min:1",
@@ -117,22 +100,39 @@ class SongsController extends Controller
             }
         });
 
+        return $validator;
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {   
+        $validator = $this->getUpdateValidator($request);
         $validator->validate();
         
         $song = Song::find($request->id);
         $album = Album::find($request->album);
 
         $song->name = $request->name;
-        $song->album()->associate($album);
+        
         $song->duration = $request->duration;
         $song->youtube_link = $request->youtube_link;
-        
-        $song->artists()->detach();
-        $song->artists()->attach($request->artists);
 
-        $song->save();
-        return Redirect::back()->with('status', 'Song Updated!');
-        
+        if($this->checkDiffArtist($album, $request->artists)){
+            return Redirect::back()->with('artistsError', 'You have some songs that dont match these artists');
+        }
+        else{
+            $song->album()->associate($album);
+            $song->save();
+            $song->artists()->detach();
+            $song->artists()->attach($request->artists);
+            return Redirect::back()->with('status', 'Song Updated!');
+        }   
     }
 
     /**
@@ -145,7 +145,7 @@ class SongsController extends Controller
     {
         $song = Song::find($id);
         $song->delete();
-        return Redirect::back()->with('statusDelete', 'Artist Deleted!');
+        return Redirect::back()->with('statusDelete', 'Song Deleted!');
 
     }
 

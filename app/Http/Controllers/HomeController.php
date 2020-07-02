@@ -24,9 +24,8 @@ class HomeController extends Controller
     public function index()
     {   
         if(auth()->user()->roles()->count() == 0){
-            auth()->user()->assignRole('fan');
+            auth()->user()->assignRole('Fan'); 
         }
-        
         return view('home');
     }
 }

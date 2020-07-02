@@ -9,7 +9,8 @@
             </div>
             <div class="modal-body">
                 <div class="alert alert-warning" role="alert">
-                     <p>Are you sure to delete to <b id="artistName"></b>?</p>
+                    <p>Are you sure to delete to <b id="artistName"></b>?</p>
+                    <p>All albums associated with this artist will be deleted.</p>
                 </div>
                 <div id="modalAlertDeleteArtist">
                     @if(session('status'))

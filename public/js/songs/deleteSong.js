@@ -11,7 +11,7 @@ function onBackFromControllerDelete() {
 
     $('#deleteSongModal').on('hidden.bs.modal', function() {
         $('#modalAlertDeleteSong').addClass('d-none');
-        $('#editButton').removeClass('d-none');
+        $('#deleteButton').removeClass('d-none');
         $('#warningSong').removeClass('d-none');
     });
 }

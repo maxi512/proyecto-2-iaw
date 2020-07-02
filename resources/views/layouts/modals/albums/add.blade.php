@@ -35,6 +35,7 @@
                     
                         <label for="imageInput" class="col-form-label">Image:</label>
                         <input type="file" name="cover" class="form-control-file" id="imageInput" >
+                        
                         <label for="artists" class="col-form-label">Artists:</label>
                         <div class="container" id="artists"></div>
                     </div> 
@@ -46,12 +47,12 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" form="formArtist">Edit</button>
+                <button type="submit" class="btn btn-primary" form="formArtist">Add</button>
             </div>
         </div>
     </div>
 </div>
-@if((!empty(Session::get('errors')) && $errors->has('addError')) || Session::get('success'))
+@if($errors->has('addError') || Session::get('success'))
     <script>
         onBackFromControllerAddAlbum();
     </script>

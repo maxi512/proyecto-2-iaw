@@ -19,4 +19,17 @@ class Album extends Model
     {
         return $this->hasMany('App\Song');
     }
+
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($album) {
+            $songs = $album->songs;
+            
+            foreach($songs as $song){
+                $song->delete();
+            }
+            
+        });
+    }
 }

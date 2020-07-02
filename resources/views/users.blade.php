@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+	<script src="/js/users/editUsers.js"></script>
 	<table class="table table-striped table-bordered" id="usersTable" style="width:100%">
 		<thead>
 			<tr>
@@ -39,12 +40,13 @@
 					<td>{{ $user->name }}</td>
 					<td>{{ $user->email }}</td>
                     <td>{{ $user->roles->first()->name }}</td>
-					<td>
+					<td class="text-center">
 						@can('update users')
 							<button type="button" class="btn btn-primary btn-sm edit" 
 								data-toggle="modal" data-target="#editUserModal"
 								data-name="{{ $user->name }}" data-id="{{ $user->id }}"
-								data-role="{{ $user->roles->first()->id }}">Edit
+								data-role="{{ $user->roles->first()->id }}"
+								onclick="setElementsToFormEditUser($(this))">Edit
 							</button>
 						@endcan
 					</td>

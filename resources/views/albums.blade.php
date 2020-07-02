@@ -2,6 +2,7 @@
 @section('content')
 	<script src="/js/albums/coverAlbum.js"></script>
 	<script src="/js/albums/addAlbum.js"></script>
+	<script src="/js/albums/deleteAlbum.js"></script>
 	<table class="table table-striped table-bordered" id="tableAlbums" style="width:100%">
 		<thead>
 			<tr>
@@ -50,21 +51,39 @@
 							</div>
 						</div>
 					</td>
-					<td>
-						<button type="button" class="btn btn-primary btn-sm showCover" 
+					<td class="text-center">
+						<button type="button" class="btn btn-primary btn-sm" 
 								data-toggle="modal" data-target="#modalCover" 
 								data-id="{{ $album->id }}" onclick="showCover($(this))">
 							Cover
 						</button>
+
+						<a href="/albums/show/{{ $album->id }}">
+							<button class="btn btn-info btn-sm" >Details</button>
+						</a>
+
+						@can('delete albums')
+							<button type="button" class="btn btn-danger btn-sm delete" 
+								data-toggle="modal" data-target="#deleteAlbumModal" 
+								data-name="{{$album->name}}" data-id="{{$album->id}}"
+								onclick="deleteAlbum($(this))">Delete</button>
+						@endcan
+						
 					</td>
 				</tr>
 			@endforeach
-			@include('layouts.modals.albums.cover')
 		</tbody>
 	</table>
-	@include('layouts.modals.albums.add')
-	<button type="button" class="btn btn-primary" 
+
+	@can('update albums')
+		<button type="button" class="btn btn-success" 
 		data-toggle="modal" data-target="#modalAddAlbum">Add Album</button>
+	@endcan
+
+	@include('layouts.modals.albums.cover')
+	@include('layouts.modals.albums.add')
+	@include('layouts.modals.albums.delete')
+
 	<script>
 		$(document).ready(function() {$('#tableAlbums').DataTable({
 			"pageLength": 10,
