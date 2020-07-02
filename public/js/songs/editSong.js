@@ -44,7 +44,6 @@ function updateSelectAlbums() {
 
         success: function(result) {
             $.each(result, function(key, value) {
-                console.log(result);
                 $('#albumSelect').append('<option value=' + value.id + '>' + value.name + '</option>');
             })
         }

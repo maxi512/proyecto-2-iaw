@@ -13,8 +13,12 @@ function populateSelectsArtists(button) {
     var data;
     $.get(urlArtistsAlbum, function(dataAllArtists) {
         data = dataAllArtists;
+        createSelectArtistsEditSong(data, urlArtistsSong);
     });
 
+}
+
+function createSelectArtistsEditSong(data, urlArtistsSong) {
     $.get(urlArtistsSong, function(artistsSong) {
         $.each(artistsSong, function(keyArtist, valueArtist) {
             $('#artistsDivSong').append('<select name="artists[]" class="form-control my-1"></select>')
