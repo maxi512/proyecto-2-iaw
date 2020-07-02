@@ -18,7 +18,13 @@
                     @if($errors->any()) 
                         @if ($errors->has('updateError'))
                             <div class="alert alert-danger">
-                                <ul><li>{{ $errors->first() }}</li></ul>
+                                <ul> @foreach ($errors->all() as $error)
+                                        @if ($loop->last)
+                                        @else
+                                            <li>{{$error}}</li>
+                                        @endif
+                                        @endforeach
+                                </ul>
                             </div>
                         @endif
                     @endif
