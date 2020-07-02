@@ -20,6 +20,7 @@ class Song extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'artists' => ArtistResource::collection($this->artists),
+            'album' => $this->album
         ];
     }
 }
