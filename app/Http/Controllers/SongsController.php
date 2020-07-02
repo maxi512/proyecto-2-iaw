@@ -31,7 +31,7 @@ class SongsController extends Controller
             'artists.*'=> "required|distinct",  
             'album' => 'required',
             'youtube_link' => 'required|url',
-            'duration' => 'required'
+            'duration' => 'required|numeric'
         ]);
         
         $validator->after(function($validator) {
@@ -91,7 +91,7 @@ class SongsController extends Controller
             'artists.*'=> "required|distinct",
             'album' => 'required',
             'youtube_link' => 'required|url',
-            'duration' => 'required'
+            'duration' => 'required|numeric'
         ]);
         
         $validator->after(function($validator) {
