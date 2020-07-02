@@ -58,8 +58,8 @@
 							Cover
 						</button>
 
-						<a href="/albums/show/{{ $album->id }}">
-							<button class="btn btn-info btn-sm" >Details</button>
+						<a href="/albums/show/{{ $album->id }}" >
+							<button class="btn btn-info btn-sm" class="text-white">Details</button>
 						</a>
 
 						@can('delete albums')

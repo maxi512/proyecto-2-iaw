@@ -135,7 +135,7 @@ class AlbumsController extends Controller
             $album->artists()->detach();
             $album->artists()->attach($request->artists);
             $album->save();
-            return Redirect::back()->with('successUpdate', 'Album Updated!');
+            return Redirect::back()->with('successUpdateAlbum', 'Album Updated!');
         }
     }
     
