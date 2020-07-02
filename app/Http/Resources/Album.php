@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Artist as ArtistResource;
 
 class Album extends JsonResource
 {
@@ -18,6 +19,7 @@ class Album extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'songs' => $this->songs,
+            'artists' => ArtistResource::collection($this->artists),
         ];
     }
 }
