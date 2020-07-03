@@ -74,7 +74,7 @@ class SongsController extends Controller
         $song->youtube_link = $request->youtube_link;
         
         if($this->checkDiffArtist($album, $request->artists)){
-            return Redirect::back()->with('artistsError', 'You have some songs that dont match these artists');
+            return Redirect::back()->with('artistsError', 'You have put some artists that dont match with the albums artists');
         }
         else{
             $song->album()->associate($album);
