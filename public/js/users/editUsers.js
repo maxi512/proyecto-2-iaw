@@ -1,9 +1,16 @@
+/**
+ * Set values in form
+ * @param {*} button with data 
+ */
 function setElementsToFormEditUser(button) {
     $('#userNameEdit').val(button.data('name'))
     $('#userIdEdit').val(button.data('id'))
     $('#selectEditUser').val(button.data('role'))
 }
 
+/**
+ * Shows an alert in modal and then removes it
+ */
 function onBackFromControllerUsers() {
     $('#editUserModal').modal('show');
     $('#formEditUser').addClass('d-none');

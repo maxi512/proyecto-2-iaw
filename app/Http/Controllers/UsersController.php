@@ -23,6 +23,9 @@ class UsersController extends Controller
         return view('users',compact('users','roles'));
     }
 
+    /**
+     * Returns a validator for adding request
+     */
      private function getAddValidator($request){
         $validator =  Validator::make($request->all(),[
             'name' => 'required',

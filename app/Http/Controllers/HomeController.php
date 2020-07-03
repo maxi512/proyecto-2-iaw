@@ -22,7 +22,8 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {   
+    {      
+        //Assign a Role if an user is new
         if(auth()->user()->roles()->count() == 0){
             auth()->user()->assignRole('Fan'); 
         }

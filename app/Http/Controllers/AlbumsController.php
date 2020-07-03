@@ -22,12 +22,17 @@ class AlbumsController extends Controller
         return view('albums', compact('albums','artists'));
     }
 
-
+    /**
+     * Encodes a file to Base64
+     */
     private function fileToBase64($file){
         $content = $file->openFile()->fread($file->getSize());
         return base64_encode($content);
     }
 
+    /**
+     * Returns a validator for adding request
+     */
     private function getAddValidator($request){
         $validator =  Validator::make($request->all(),[
             'name' => 'required',
@@ -78,7 +83,10 @@ class AlbumsController extends Controller
         $album = Album::find($id);
         return view('showAlbums', compact('album'));
     }
-
+    
+    /**
+     * Returns a validator for updating request
+     */
     private function getUpdateValidator($request){
         $validator =  Validator::make($request->all(),[
             'name' => 'required',
@@ -96,6 +104,10 @@ class AlbumsController extends Controller
         return $validator;
     }
 
+    /**
+     * Return true if the artists are in the album
+     * Return false otherwise
+     */
     private function checkDiffArtist($album, $artistsId){
         $artistsInAlbum = Artist::findMany($artistsId);
         $diffArtist = FALSE;
@@ -156,6 +168,9 @@ class AlbumsController extends Controller
         return Album::all();
     }
 
+    /**
+     * Returns a collection of albums whose artists are in the requests
+     */
     public function albumsFromList(Request $request)
     {    
         $collection = collect([]);
@@ -178,11 +193,17 @@ class AlbumsController extends Controller
         return $collection->unique('id');
     }
 
+    /**
+     * Return the cover in Base64 of an album
+     */
     public function getCover($id){
         $album = Album::find($id);
         return strval($album->image);
     }
 
+    /**
+     * Returns the artists of an albums
+     */
     public function getArtists($id){
         $album = Album::find($id);
         return $album->artists;

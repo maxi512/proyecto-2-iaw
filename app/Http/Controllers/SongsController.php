@@ -24,6 +24,9 @@ class SongsController extends Controller
         return view('songs',compact('songs','artists','albums'));
     }
 
+    /**
+     * Return a validator for Storing request
+     */
     private function getStoreValidator($request){
         $validator =  Validator::make($request->all(),[
             'name' => 'required',
@@ -43,13 +46,18 @@ class SongsController extends Controller
         return $validator;
     }
 
+    /**
+     * Check if all the artists of the song are in the album
+     * Return true if there are no matching
+     * Otherwise, returns false
+     */
     private function checkDiffArtist($album, $artistsId){
         $artistsInSong = Artist::findMany($artistsId);
         $diffArtist = FALSE;
         foreach($artistsInSong as $artistInSong){
             if(!($album->artists->contains('id', $artistInSong->id))){
                 $diffArtist = TRUE;
-            break;
+                break;
             }
         }
         return $diffArtist;
@@ -84,6 +92,9 @@ class SongsController extends Controller
         } 
     }
 
+    /**
+     * Returns a validator for updating request.
+     */
     private function getUpdateValidator($request){
         $validator =  Validator::make($request->all(),[
             'name' => 'required',
@@ -119,7 +130,6 @@ class SongsController extends Controller
         $album = Album::find($request->album);
 
         $song->name = $request->name;
-        
         $song->duration = $request->duration;
         $song->youtube_link = $request->youtube_link;
 
@@ -149,6 +159,9 @@ class SongsController extends Controller
 
     }
 
+    /**
+     * Returns all aritsts.
+     */
     public function getArtists($id){
         $song = Song::find($id);
         return $song->artists;

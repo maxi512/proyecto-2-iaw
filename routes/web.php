@@ -26,9 +26,6 @@ Route::group(['middleware' => ['auth']], function() {
         return view('faqs');
     });
 
-
-    
-
     //utilities
     Route::get('/artists/{id}/albums', 'ArtistsController@getAlbums');
     Route::get('/albums/{id}/artists', 'AlbumsController@getArtists');

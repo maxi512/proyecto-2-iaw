@@ -1,3 +1,7 @@
+/**
+ * Set values in form and create selects with artists
+ * @param {*} button with data
+ */
 function onClickEditSongButton(button) {
     setValues(button);
     var urlArtists = '/songs/' + button.data('id') + '/artists';
@@ -9,6 +13,10 @@ function onClickEditSongButton(button) {
     });
 }
 
+/**
+ * Set values in form for edit song.
+ * @param {*} button with data
+ */
 function setValues(button) {
     $('#songNameEdit').val(button.data('name'))
     $('#youtubeLinkEdit').val(button.data('link'))
@@ -16,6 +24,11 @@ function setValues(button) {
     $('#songId').val(button.data('id'))
 }
 
+/**
+ * Create all selects artists
+ * @param {*} data for all artists
+ * @param {*} urlArtists url for artists in song
+ */
 function createSelectArtists(data, urlArtists) {
     $.get(urlArtists, function(artistsSong) {
         $.each(artistsSong, function(_, valueArtist) {
@@ -32,6 +45,9 @@ function createSelectArtists(data, urlArtists) {
     });
 }
 
+/**
+ * Update albums select with the correct albums
+ */
 function updateSelectAlbums() {
     $("#albumSelect").empty();
     var values = $("#formEditSong select[name='artists[]']").map(function() { return $(this).val(); }).get();
@@ -50,13 +66,18 @@ function updateSelectAlbums() {
     });
 }
 
-
+/**
+ * Set listener to artists selects
+ */
 function setListenerToSelects() {
     $("#formEditSong select[name='artists[]']").on('change', function() {
         updateSelectAlbums()
     });
 }
 
+/**
+ * Adds a artist select in modal
+ */
 function onClickAddArtistButton() {
     var url = '/artists/all';
     $.get(url, function(data) {
@@ -69,26 +90,37 @@ function onClickAddArtistButton() {
         setListenerToSelects()
         updateSelectAlbums()
     });
-
 }
 
+/**
+ * Deletes all selects in modal
+ */
 function onHideEditModal() {
     $("#artistsDiv").empty();
     $("#albumSelect").empty();
 
 }
 
+/**
+ * Deletes last select in modal
+ */
 function deleteSelect() {
     $('#artistsDiv select:last-child').remove();
     updateSelectAlbums()
 }
 
+/**
+ * Set listener on hide modal
+ */
 function setListeners() {
     $('#editSongModal').on('hide.bs.modal', function() {
         onHideEditModal()
     })
 }
 
+/**
+ * Shows an alert in modal and then removes it.
+ */
 function setListenersOnBackFromController() {
     $('#editSongModal').modal('show');
     $('#formEditSong').addClass('d-none');

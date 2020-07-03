@@ -24,16 +24,6 @@ class ArtistsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -58,28 +48,6 @@ class ArtistsController extends Controller
         $artist->country = $request->country;
         $artist->save();
         return Redirect::back()->with('success', '!');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -126,11 +94,17 @@ class ArtistsController extends Controller
         return Redirect::back()->with('status', 'Artist Deleted!');
     }
 
+    /**
+     * Returns the albums of an artist
+     */
     public function getAlbums($id){
         $artist = Artist::find($id);
         return $artist->albums;
     }
 
+    /**
+     * Returns all of the artists
+     */
     public function getArtists(){
         return Artist::all();
     }

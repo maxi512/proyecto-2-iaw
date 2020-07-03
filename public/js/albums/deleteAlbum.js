@@ -1,9 +1,16 @@
+/**
+ * Set values in form
+ * @param {*} button with data
+ */
 function deleteAlbum(button) {
     $('#albumHideDelete').val(button.data('id'))
     $('#albumName').html(button.data('name'))
     $('#formDeleteAlbum').attr('action', '/albums/delete/'.concat(button.data('id')))
 }
 
+/**
+ * Shows an alert in modal and then removes it
+ */
 function onBackFromControllerDeleteAlbum() {
     $('#deleteAlbumModal').modal('show');
     $('#deleteAlbumButton').addClass('d-none');

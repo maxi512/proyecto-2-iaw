@@ -1,3 +1,6 @@
+/**
+ * Adds a select in modal
+ */
 function addSelect() {
     var url = '/artists/all';
     $.get(url, function(data) {
@@ -15,6 +18,9 @@ function addSelect() {
     });
 }
 
+/**
+ * update albums select with correct albums
+ */
 function updateSelectAlbumsAdd() {
     $("#albumAddSelect").empty();
 
@@ -34,12 +40,13 @@ function updateSelectAlbumsAdd() {
     });
 }
 
-
+/**
+ * Removes last select  in modal
+ */
 function removeSelect() {
     $('#artists select:last-child').remove();
     updateSelectAlbumsAdd();
 }
-
 
 function setListenerSelects() {
     $("#artists select[name='artists[]']").on('change', function() {
@@ -47,11 +54,16 @@ function setListenerSelects() {
     });
 }
 
-
+/**
+ * Shows modal
+ */
 function onBackFromController() {
     $('#modalAddSong').modal('show');
 }
 
+/**
+ * Shows an alert and then removes it
+ */
 function onHideAddSong() {
     $('#selectAlbum').addClass('sr-only');
     $("#selectArtist").prop("selectedIndex", 0);

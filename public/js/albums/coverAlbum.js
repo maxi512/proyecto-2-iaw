@@ -1,3 +1,7 @@
+/**
+ * Set image in modal
+ * @param {*} button with data
+ */
 function showCover(button) {
     var idAlbum = button.data('id')
     $.ajax({

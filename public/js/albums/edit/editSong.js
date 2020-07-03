@@ -1,3 +1,7 @@
+/**
+ * Set values in form
+ * @param {*} button with data
+ */
 function setElementsFromButton(button) {
     $('#songId').val(button.data('id'))
     $('#songNameEdit').val(button.data('name'))
@@ -7,6 +11,10 @@ function setElementsFromButton(button) {
     populateSelectsArtists(button)
 }
 
+/**
+ * Create Selects with artists in modal
+ * @param {*} button 
+ */
 function populateSelectsArtists(button) {
     var urlArtistsAlbum = '/albums/' + button.data('album') + '/artists';
     var urlArtistsSong = '/songs/' + button.data('id') + '/artists';
@@ -30,6 +38,10 @@ function createSelectArtistsEditSong(data, urlArtistsSong) {
     });
 }
 
+/**
+ * Add a single select with albums artists
+ * @param {*} button with data
+ */
 function onClickAddArtistOnSongButton(button) {
     var url = '/albums/' + button.data('album') + '/artists';
     $.get(url, function(data) {
@@ -43,16 +55,25 @@ function onClickAddArtistOnSongButton(button) {
     });
 }
 
+/**
+ * Remove last select in modal
+ */
 function deleteSelectSong() {
     $('#artistsDivSong select:last-child').remove();
 }
 
+/**
+ * Delete all selects on hide modal
+ */
 function setOnHideListenerEditSong() {
     $('#editSongAlbumModal').on('hide.bs.modal', function() {
         $("#artistsDivSong").empty();
     })
 }
 
+/**
+ * Shows an alert in modal and then deletes it
+ */
 function setListenersOnBackFromController() {
     $('#editSongAlbumModal').modal('show');
     $('#formEditSongAlbum').addClass('d-none');

@@ -2,6 +2,10 @@ function setAlbumToForm(button) {
     $('#albumHideAddSong').val(button.data('album'));
 }
 
+/**
+ * Generate the sekects with the albums artists
+ * @param {*} button with data
+ */
 function addSelectSongs(button) {
     var url = '/albums/' + button.data('album') + '/artists';
     $.get(url, function(data) {
@@ -16,6 +20,9 @@ function addSelectSongs(button) {
     });
 }
 
+/**
+ * Delete the last select inserted
+ */
 function removeSelectSongs() {
     $('#artists select:last-child').remove();
 }

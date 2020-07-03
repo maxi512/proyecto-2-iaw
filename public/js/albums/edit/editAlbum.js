@@ -1,3 +1,7 @@
+/**
+ * Set Values in form
+ * @param {*} button with data
+ */
 function setInfoInForm(button) {
     $('#inputNameAlbum').val(button.data('name'))
     $('#albumHide').val(button.data('album'))
@@ -5,6 +9,10 @@ function setInfoInForm(button) {
     setOnHideListenerEditAlbum()
 }
 
+/**
+ * Create selects in Modal
+ * @param {*} button with data
+ */
 function populateSelectsEditAlbum(button) {
     var urlArtists = '/albums/' + button.data('album') + '/artists';
     var urlAllArtists = '/artists/all'
@@ -28,6 +36,9 @@ function createSelectArtistsEditAlbum(data, urlArtists) {
     });
 }
 
+/**
+ * Create Selects with all artists in modal
+ */
 function onClickAddArtistButton() {
     var url = '/artists/all';
     $.get(url, function(data) {
@@ -41,16 +52,25 @@ function onClickAddArtistButton() {
     });
 }
 
+/**
+ * Remove last select in modal 
+ */
 function deleteSelect() {
     $('#artistsDivAlbum select:last-child').remove();
 }
 
+/**
+ * Delete all selects in modal
+ */
 function setOnHideListenerEditAlbum() {
     $('#editAlbum').on('hide.bs.modal', function() {
         $("#artistsDivAlbum").empty();
     })
 }
 
+/**
+ * Show alert and then removes it
+ */
 function setListenersOnBackFromControllerEditAlbum() {
     $('#editAlbum').modal('show');
     $('#formEditAlbum').addClass('d-none');
