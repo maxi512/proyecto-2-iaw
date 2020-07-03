@@ -9,3 +9,7 @@ Se puede consultar informacion a traves de la API, tanto de los artistas como de
 #### Librerias Utilizadas:
 * [PHP Faker music](https://github.com/rauwebieten/php-faker-music)
 * [Country List](https://github.com/Monarobase/country-list)
+* [Laravel Permission](https://github.com/spatie/laravel-permission)
+
+#### Archivo Postman:
+* [Click Aqui](https://drive.google.com/file/d/11zgy2v0qGJl0fQ9U6qV85TjqrSsv10XL/view?usp=sharing)
