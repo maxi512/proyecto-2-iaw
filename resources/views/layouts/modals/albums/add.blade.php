@@ -32,6 +32,10 @@
                     <div class="form-group" id="group">
                         <label for="recipient-name" class="col-form-label">Name:</label>
                         <input type="text" name="name" class="form-control" id="recipient-name">
+
+                        <label for="recipient-year" class="col-form-label">Year:</label>
+                        <input type="number" min="1900" max="2020" step="1" 
+                            name="year" class="form-control" id="recipient-year">
                     
                         <label for="imageInput" class="col-form-label">Image:</label>
                         <input type="file" name="cover" class="form-control-file" id="imageInput" >

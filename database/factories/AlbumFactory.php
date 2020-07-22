@@ -9,6 +9,7 @@ $factory->define(Album::class, function (Faker $faker) {
     $faker->addProvider(new \RauweBieten\PhpFakerMusic\Metal($faker));
     return [
        'name' => $faker->musicMetalAlbum(),
+       'year' => $faker->year($max = 'now'),
        'image' => fileToBase64("https://picsum.photos/300/300")
     ];
 });

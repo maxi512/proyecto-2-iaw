@@ -25,6 +25,7 @@
 			<button type="button" class="btn btn-primary btn-sm edit mt-3" 
 				data-toggle="modal" data-target="#editAlbum"
 				data-album="{{$album->id}}" data-name="{{$album->name}}"
+				data-year="{{$album->year}}"
 				onclick="setInfoInForm($(this))">Edit Album</button>
 		@endcan
 		

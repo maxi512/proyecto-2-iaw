@@ -2,7 +2,7 @@
     <div class="modal-dialog" >
         <div class="modal-content" >
             <div class="modal-header">
-                <h5 class="modal-title">Edit artist</h5>
+                <h5 class="modal-title">Edit album</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -39,6 +39,8 @@
                     <div class="form-group">
                         <label for="name" class="col-form-label">Name:</label>
                         <input type="text" id="inputNameAlbum" name="name" class="form-control">
+                        <label for="name" class="col-form-label">Year:</label>
+                        <input type="text" id="inputYearAlbum" name="year" class="form-control">
                     </div>
                     <label class="col-form-label">Artists:</label>
                     <div class="container">

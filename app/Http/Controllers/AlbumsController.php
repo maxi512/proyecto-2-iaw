@@ -38,6 +38,7 @@ class AlbumsController extends Controller
             'name' => 'required',
             'artists' => "required|array|min:1",
             'artists.*'=> "required|distinct",
+            'year' => 'required|digits:4|integer|min:1900|max:'.(date('Y')+1),
             'cover' => 'required|mimes:jpeg,jpg,png,gif|max:10000',
         ]);
         
@@ -63,13 +64,13 @@ class AlbumsController extends Controller
         $album = new Album;
         $album->name = $request->name;
         $album->image = $this->fileToBase64($request->file('cover'));
+        $album->year = $request->year;
 
         $artists = $request->artists;
        
         $album->save();
         $album->artists()->attach($artists);
-        return Redirect::back()->with('success', 'Album Created!'); 
-       
+        return Redirect::back()->with('success', 'Album Created!');
     }
 
     /**
@@ -92,6 +93,7 @@ class AlbumsController extends Controller
             'name' => 'required',
             'artists' => "required|array|min:1",
             'artists.*'=> "required|distinct",
+            'year' => 'required|digits:4|integer|min:1900|max:'.(date('Y')+1),
             'cover' => "nullable|mimes:jpeg,jpg,png,gif|max:10000"
         ]);
 
@@ -135,6 +137,7 @@ class AlbumsController extends Controller
 
         $album = Album::find($request->album);
         $album->name = $request->name;
+        $album->year = $request->year;
 
         if($request->has('cover')){
             $album->image = $this->fileToBase64($request->file('cover')); 

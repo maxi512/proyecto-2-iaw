@@ -25,6 +25,12 @@
 						<div class="ml-auto"><i class="fas fa-sort" aria-hidden="true"></i></div>
 					</div>
 				</th>
+				<th scope="col">
+					<div class="d-flex">
+						<div>Year</div>
+						<div class="ml-auto"><i class="fas fa-sort" aria-hidden="true"></i></div>
+					</div>
+				</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -51,6 +57,7 @@
 							</div>
 						</div>
 					</td>
+					<td>{{ $album->year }}</td>
 					<td class="text-center">
 						<button type="button" class="btn btn-primary btn-sm" 
 								data-toggle="modal" data-target="#modalCover" 

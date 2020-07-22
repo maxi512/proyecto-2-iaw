@@ -4,6 +4,7 @@
  */
 function setInfoInForm(button) {
     $('#inputNameAlbum').val(button.data('name'))
+    $('#inputYearAlbum').val(button.data('year'))
     $('#albumHide').val(button.data('album'))
     populateSelectsEditAlbum(button)
     setOnHideListenerEditAlbum()

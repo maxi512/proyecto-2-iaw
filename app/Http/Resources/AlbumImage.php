@@ -3,9 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Artist as ArtistResource;
 
-class Album extends JsonResource
+class AlbumImage extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,7 +17,6 @@ class Album extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'year' => $this->year,
             'songs' => $this->songs,
             'image' => $this->image,
             'artists' => ArtistResource::collection($this->artists),
