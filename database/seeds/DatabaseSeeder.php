@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
         ]);
 
-        factory(Album::class,18)->create()->each(function ($album){
+        factory(Album::class,24)->create()->each(function ($album){
             $album->songs()->saveMany(factory(Song::class,2)->create()->each(function ($song){
                 $song->artists()->save(factory(Artist::class)->create());
             }));

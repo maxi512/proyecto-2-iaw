@@ -16,20 +16,20 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/albums', function () {
-    return AlbumResource::collection(Album::paginate(6));
+    return AlbumResource::collection(Album::paginate(8));
 });
 
 Route::get('/albums/year/{year}', function ($year) {
-    return AlbumResource::collection(Album::where('year', $year)->paginate(6));
+    return AlbumResource::collection(Album::where('year', $year)->paginate(8));
 });
 
 Route::get('/albums/name/{name}', function ($name) {
-    return AlbumResource::collection(Album::where('name', 'ilike', "%{$name}%")->paginate(6));
+    return AlbumResource::collection(Album::where('name', 'ilike', "%{$name}%")->paginate(8));
 });
 
 Route::get('/albums/artist/{name}', function ($name) {
     return AlbumResource::collection(
-        Album::whereHas('artists', function($q) use($name) { $q->where('name', 'ilike', "%{$name}%"); })->paginate(6));
+        Album::whereHas('artists', function($q) use($name) { $q->where('name', 'ilike', "%{$name}%"); })->paginate(8));
 });
 
 Route::get('/songs', function () {
