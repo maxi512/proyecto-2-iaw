@@ -28,10 +28,10 @@ class DatabaseSeeder extends Seeder
             }));
 
             foreach($album->songs as $song){
-                    foreach($song->artists as $artist){
-                        $album->artists()->attach($artist->id);
-                    }
+                foreach($song->artists as $artist){
+                    $album->artists()->attach($artist->id);
                 }
+            }
  
         });
 
