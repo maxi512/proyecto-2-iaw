@@ -20,6 +20,7 @@ class SongNoAlbum extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'duration' => $this->duration,
+            'youtube_link' => $this->youtube_link,
             'artists' => ArtistResource::collection($this->artists),
         ];
     }
