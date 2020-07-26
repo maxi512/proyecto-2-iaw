@@ -19,6 +19,7 @@ class SongNoAlbum extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'duration' => $this->duration,
             'artists' => ArtistResource::collection($this->artists),
         ];
     }
